@@ -504,7 +504,7 @@
 			"settings":
 			{
 				"buffer_size": 2542,
-				"line_ending": "Windows"
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -520,7 +520,7 @@
 			"settings":
 			{
 				"buffer_size": 13286,
-				"line_ending": "Windows"
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -536,7 +536,7 @@
 			"settings":
 			{
 				"buffer_size": 2531,
-				"line_ending": "Windows"
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -548,20 +548,12 @@
 			}
 		},
 		{
-			"file": "index.html",
-			"settings":
-			{
-				"buffer_size": 8859,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "index.php",
 			"settings":
 			{
 				"buffer_size": 9039,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -618,33 +610,39 @@
 			{
 				"buffer_size": 13053,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
+				"line_ending": "Unix"
 			}
 		},
 		{
+			"contents": "<?php\n\tinclude('session.php');\n\t$application_id = $_GET['app_id'];\n?>\n<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<meta charset=\"utf-8\">\n\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\t\t<script src=\"js/jquery.min.js\"></script>\n\t\t<script src=\"DT.js\"></script>\n\t\t<script src=\"js/bootstrap.bundle.min.js\"></script>\n\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"css/bootstrap.min.css\">\n\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"main.css\">\n\t\t<title>Application <?= $application_id ?></title>\n\t\t<script type=\"text/javascript\">\n\n\t\t\tvar acceptApplication_js, rejectApplication_js = null;\n\t\t\n\t\t$(document).ready(function() {\n\n\t\t\t$(\".col-md-5:odd\").addClass(\"text-left\");\n\t\t\t$(\".col-md-5:even\").addClass(\"text-right\");\n\n\t\t\tfunction updateData(response) {\n\n\t\t\t\t$(\"#stud_name\").html(response['stud_name']);\n\t\t\t\t$(\"#father_name\").html(response['father_name']);\n\t\t\t\t$(\"#dept\").html(response['dept']);\n\t\t\t\t$(\"#clg_address\").html(response['clg_address']);\n\t\t\t\t$(\"#la_yr_course\").html(response['la_yr_course']);\n\t\t\t\t$(\"#cu_yr_course\").html(response['cu_yr_course']);\n\t\t\t\t$(\"#no_of_arrear\").html(response['no_of_arrear']);\n\t\t\t\t$(\"#elig-for-scholarship\").html(\n\t\t\t\t\tresponse['elig_for_scholar'] == 1 ? \"Yes\" : \"No\"\n\t\t\t\t);\n\t\t\t\t$(\"#elig-for-next-exam\").html(\n\t\t\t\t\tresponse['elig_for_next_exam'] == 1 ? \"Yes\" : \"No\"\n\t\t\t\t);\n\t\t\t\t$(\"#caste\").html(response['cast']);\n\t\t\t\t$(\"#class\").html(response['class']);\n\t\t\t\t$(\"#temp-addr\").html(response['temp_address']);\n\t\t\t\t$(\"#perm-addr\").html(response['perm_address']);\n\t\t\t\t$(\"#prev-year-scholar-amt\").html(response['prev_yr_scholar_amt']);\n\t\t\t\t$(\"#hostel-chk-in-la-year\").html(response['hostel_chk_in_la_yr']);\n\t\t\t\t$(\"#hostel-chk-out-la-year\").html(response['hostel_chk_out_la_yr']);\n\t\t\t\t$(\"#hostel-chk-in-cu-year\").html(response['hostel_chk_in_cu_yr']);\n\t\t\t\t$(\"#hostel-chk-out-cu-year\").html(response['hostel_chk_out_cu_yr']);\n\t\t\t\t$(\"#cand-behav-impr\").html(response['cand_behav_impr']);\n\t\t\t\t$(\"#cand-prev-yr-attend\").html((response['cand_prev_yr_attend'] == 0) ? \"Not Updated\" : response['cand_prev_yr_attend']);\n\n\t\t\t}\n\n\t\t\tvar req = $.ajax({\n\t\t\turl: \"database/fetch_application_data.php\",\n\t\t\ttype: \"POST\",\n\t\t\tdata: {\n\t\t\t\"application_id\": \"<?= $application_id ?>\"\n\t\t\t},\n\t\t\tdataType: \"json\"\n\t\t\t});\n\n\t\t\treq.done(function(response, textStatus, jqXHr) {\n\t\t\t\n\t\t\t\tupdateData(response);\n\t\t\t\t// alert(response[row]['application_id']);\n\t\t\t});\n\n\t\t\treq.error(function(error, msg) {\n\t\t\talert(error + \": \" + msg);\n\t\t\t});\n\n\t\t\tfunction acceptApplication() {\n\t\t\t\t// alert(\"Application is being processed\");\n\t\t\t\tvar val = $('form').serialize();\n\n\t\t\t\treq =  $.ajax({\n\t\t\t\t\turl: \"database/\",\n\t\t\t\t\ttype: \"POST\",\n\t\t\t\t});\n\t\t\t}\n\n\t\t\t$(\"#reject-modal\").on('show.bs.modal', function (event) {\n\t\t\t\tvar app_id = \"<?= $application_id ?>\";\n\n\t\t\t\tvar modal = $(this);\n\t\t\t\tmodal.find('.modal-title').text(\"Reject Application: \" + app_id);\n\t\t\t\tmodal.find('.modal-body input').val(app_id);\n\n\t\t\t\tmodal.find('.modal-footer .btn-primary').on('click', function (evt) {\n\t\t\t\t\trejectApplication(app_id);\n\t\t\t\t});\n\t\t\t});\n\n\t\t\tfunction rejectApplication(application_id) {\n\t\t\t\talert(\"Application has been Rejected\");\n\t\t\t\twindow.location = \"staff_index_lvl0.php\";\n\t\t\t}\n\n\t\t\tacceptApplication_js = acceptApplication;\n\t\t\trejectApplication_js = rejectApplication;\n\t\t});\n\t\t</script>\n\t</head>\n\t<body class=\"parallax\">\n\t\t<div class=\"jumbotron header text-center\">\n\t\t\t<h1 class=\"display-4\">This is Header.</h1>\n\t\t\t<p>This is Sub-Header.</p>\n\t\t</div>\n\t\t<nav class=\"navbar bg-blue navbar-dark white sticky-top\" role=\"navigation\">\n\t\t\t<div class=\"container-fluid\">\n\t\t\t\t<button type=\"button\" class=\"navbar-toggler white\" data-toggle=\"collapse\"\n\t\t\t\tdata-target=\"#myNavbar\">\n\t\t\t\t<span class=\"navbar-toggler-icon\"></span>\n\t\t\t\t</button>\n\t\t\t\t<div class=\"navbar-header\">\n\t\t\t\t\t<a class=\"navbar-brand white\" href=\"#\">Menu</a>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"collapse navbar-collapse\" id=\"myNavbar\">\n\t\t\t\t\t<ul class=\"nav navbar-nav white\">\n\t\t\t\t\t\t<span class=\"line-br-white\"></span>\n\t\t\t\t\t\t<li class=\"nav-item\"><a href=\"#\" class=\"white nav-link\">Apply Scholarship</a></li>\n\t\t\t\t\t\t<span class=\"line-br-white\"></span>\n\t\t\t\t\t\t<li class=\"nav-item\"><a href=\"#\" class=\"white nav-link\">Review Scholarship - (Staffs only)</a></li>\n\t\t\t\t\t\t<span class=\"line-br-white\"></span>\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n\t\t\t\t<ul class=\"nav navbar-nav navbar-right\">\n\t\t\t\t\t<li><a href=\"logout.php\" class=\"white nav-link\" style=\"text-decoration: none;\">logout</a></li>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</nav>\n\t\t<div class=\"container water-drop\">\n\t\t\t<div class=\"display-4 text-center\">Application <?= $application_id ?></div>\n\t\t</div>\n\t\t<div class=\"application-container container\">\n\t\t\t<form method=\"POST\">\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tStudent Name:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"stud_name\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<!-- <div class=\"line-br-blue\"></div> -->\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tFather Name:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"father_name\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tCollege Address:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"clg_address\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tLast Year Course:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"la_yr_course\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tCurrent Year Course:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"cu_yr_course\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tNumber of Arrear:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"no_of_arrear\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tEligible for Applying Scholarship:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"elig-for-scholarship\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tEligible for Next Exam:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"elig-for-next-exam\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tDepartment:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"dept\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tCaste:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"caste\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tClass:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"class\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tTemporary Address:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"temp-addr\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tPermanent Address:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"perm-addr\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tPrevious Year Scholarship Amount:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"prev-year-scholar-amt\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tHostel Check In Last Year:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"hostel-chk-in-la-year\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tHostel Check Out Last Year:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"hostel-chk-out-la-year\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tHostel Check In Current Year:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"hostel-chk-in-cu-year\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tHostel Check Out Current Year (Approx):\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"hostel-chk-out-cu-year\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p>Candidate's Behaviour Impression:</p>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"cand-behav-impr\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p>Candidate's Previous Year Attendance:</p>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"cand-prev-yr-attend\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5 form-group\">\n\t\t\t\t\t<button class=\"btn-norm water-drop\" onclick=\"acceptApplication_js()\">Accept</button>\n\t\t\t\t\t<!-- btn btn-lg btn-outline-success -->\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5 form-group\">\n\t\t\t\t\t<button type=\"button\" class=\"btn-norm water-drop\" data-toggle=\"modal\" data-target=\"#reject-modal\">Reject</button>\n\t\t\t\t\t<!-- btn btn-lg btn-outline-danger -->\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</form>\n\t\t</div>\n\t\t<div class=\"modal fade\" id=\"reject-modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t\t\t<div class=\"modal-dialog\" role=\"document\">\n\t\t\t\t<div class=\"modal-content\">\n\t\t\t\t\t <div class=\"modal-header\">\n\t\t\t\t\t \t<h5 class=\"modal-title\" id=\"exampleModalLabel\">New Message</h5>\n\t\t\t\t\t \t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n\t\t\t\t\t </div>\n\t\t\t\t\t <div class=\"modal-body\">\n\t\t\t\t\t \t<form id=\"form-reject-modal\">\n\t\t\t\t\t \t\t<div class=\"form-group\">\n\t\t\t\t\t \t\t\t<label for=\"appilcation-id\" class=\"col-form-label\">Application Id:</label>\n\t\t\t\t\t \t\t\t<input type=\"text\" class=\"form-control\" id=\"appilcation-id\" name=\"appilcation-id\" readonly>\n\t\t\t\t\t \t\t</div>\n\t\t\t\t\t \t\t<div class=\"form-group\">\n\t\t\t\t\t \t\t\t<label for=\"reject-reason-msg\" class=\"col-form-label\">Rejection Message: <small class=\"text-muted\"> *Optional but Recommended</small></label>\n\t\t\t\t\t \t\t\t<textarea class=\"form-control\" id=\"reject-reason-msg\" name=\"reject-reason-msg\" placeholder=\"Eg. _____ document is not valid\"></textarea>\n\t\t\t\t\t \t\t</div>\n\t\t\t\t\t \t</form>\n\t\t\t\t\t </div>\n\t\t\t\t\t <div class=\"modal-footer\">\n\t\t\t\t\t \t<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n\t\t\t\t\t \t<button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Reject Application</button>\n\t\t\t\t\t </div>\n\t\t\t\t</div>\n\t\t\t</div>\t\n\t\t</div>\n\t\t<div class=\"footer white\">\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-sm white\">\n\t\t\t\t\t<p><a href=\"index.php\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Go to Home!\">Home</a></p>\n\t\t\t\t\t<p><a href=\"about.php\">About</a></p>\n\t\t\t\t\t<p><a href=\"contact.php\">Contact Us</a></p>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-sm white\">\n\t\t\t\t\t<p><a href=\"#\">Terms and Conditions</a></p>\n\t\t\t\t\t<p><a href=\"#\">Privacy Policy</a></p>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"clock\">\n\t\t\t\t\t<div id=\"Date\"></div>\n\t\t\t\t\t<ul>\n\t\t\t\t\t\t<li id=\"hours\"></li>\n\t\t\t\t\t\t<li id=\"point\">:</li>\n\t\t\t\t\t\t<li id=\"min\"></li>\n\t\t\t\t\t\t<li id=\"point\">:</li>\n\t\t\t\t\t\t<li id=\"sec\"></li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<p class=\"text-center\">Copyright &copy <script>document.write(new Date().getFullYear())</script> - EpicSoftwares.<br>An Unauthorized and Unofficial Software Development team.</p>\n\t\t\t<p class=\"text-center\">- A Beloved work of <span class=\"team-name\">BHAANN.</span></p>\n\t\t</div>\n\t</body>\n</html>",
 			"file": "form_review_lvl0.php",
+			"file_size": 11178,
+			"file_write_time": 131951126215322363,
 			"settings":
 			{
 				"buffer_size": 10816,
-				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
+			"contents": "<?php\n\tinclude('session.php');\n\t$application_id = $_GET['app_id'];\n?>\n<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<meta charset=\"utf-8\">\n\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\t\t<script src=\"js/jquery.min.js\"></script>\n\t\t<script src=\"DT.js\"></script>\n\t\t<script src=\"js/bootstrap.bundle.min.js\"></script>\n\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"css/bootstrap.min.css\">\n\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"main.css\">\n\t\t<title>Application <?= $application_id ?></title>\n\t\t<script type=\"text/javascript\">\n\n\t\t\tvar acceptApplication_js, rejectApplication_js = null;\n\t\t\n\t\t$(document).ready(function() {\n\n\t\t\t$(\".col-md-5:odd\").addClass(\"text-left\");\n\t\t\t$(\".col-md-5:even\").addClass(\"text-right\");\n\n\t\t\tfunction updateData(response) {\n\n\t\t\t\t$(\"#stud_name\").html(response['stud_name']);\n\t\t\t\t$(\"#father_name\").html(response['father_name']);\n\t\t\t\t$(\"#dept\").html(response['dept']);\n\t\t\t\t$(\"#clg_address\").html(response['clg_address']);\n\t\t\t\t$(\"#la_yr_course\").html(response['la_yr_course']);\n\t\t\t\t$(\"#cu_yr_course\").html(response['cu_yr_course']);\n\t\t\t\t$(\"#no_of_arrear\").html(response['no_of_arrear']);\n\t\t\t\t$(\"#elig-for-scholarship\").html(\n\t\t\t\t\tresponse['elig_for_scholar'] == 1 ? \"Yes\" : \"No\"\n\t\t\t\t);\n\t\t\t\t$(\"#elig-for-next-exam\").html(\n\t\t\t\t\tresponse['elig_for_next_exam'] == 1 ? \"Yes\" : \"No\"\n\t\t\t\t);\n\t\t\t\t$(\"#caste\").html(response['cast']);\n\t\t\t\t$(\"#class\").html(response['class']);\n\t\t\t\t$(\"#temp-addr\").html(response['temp_address']);\n\t\t\t\t$(\"#perm-addr\").html(response['perm_address']);\n\t\t\t\t$(\"#prev-year-scholar-amt\").html(response['prev_yr_scholar_amt']);\n\t\t\t\t$(\"#hostel-chk-in-la-year\").html(response['hostel_chk_in_la_yr']);\n\t\t\t\t$(\"#hostel-chk-out-la-year\").html(response['hostel_chk_out_la_yr']);\n\t\t\t\t$(\"#hostel-chk-in-cu-year\").html(response['hostel_chk_in_cu_yr']);\n\t\t\t\t$(\"#hostel-chk-out-cu-year\").html(response['hostel_chk_out_cu_yr']);\n\t\t\t\t$(\"#cand-behav-impr\").html(response['cand_behav_impr']);\n\t\t\t\t$(\"#cand-prev-yr-attend\").html(response['cand_prev_yr_attend'] == 0 ? \"Not Updated\" : response['cand_prev_yr_attend']);\n\t\t\t}\n\n\t\t\tvar req = $.ajax({\n\t\t\turl: \"database/fetch_application_data.php\",\n\t\t\ttype: \"POST\",\n\t\t\tdata: {\n\t\t\t\"application_id\": \"<?= $application_id ?>\"\n\t\t\t},\n\t\t\tdataType: \"json\"\n\t\t\t});\n\n\t\t\treq.done(function(response, textStatus, jqXHr) {\n\t\t\t\n\t\t\t\tupdateData(response);\n\t\t\t\t// alert(response[row]['application_id']);\n\t\t\t});\n\n\t\t\treq.error(function(error, msg) {\n\t\t\talert(error + \": \" + msg);\n\t\t\t});\n\n\t\t\tfunction acceptApplication() {\n\t\t\t\t// alert(\"Application is being processed\");\n\t\t\t\tvar val = $('form').serialize();\n\n\t\t\t\treq =  $.ajax({\n\t\t\t\t\turl: \"database/\",\n\t\t\t\t\ttype: \"POST\",\n\t\t\t\t});\n\t\t\t}\n\n\t\t\t$(\"#reject-modal\").on('show.bs.modal', function (event) {\n\t\t\t\tvar app_id = \"<?= $application_id ?>\";\n\n\t\t\t\tvar modal = $(this);\n\t\t\t\tmodal.find('.modal-title').text(\"Reject Application: \" + app_id);\n\t\t\t\tmodal.find('.modal-body input').val(app_id);\n\n\t\t\t\tmodal.find('.modal-footer .btn-primary').on('click', function (evt) {\n\t\t\t\t\trejectApplication(app_id);\n\t\t\t\t});\n\t\t\t});\n\n\t\t\tfunction rejectApplication(application_id) {\n\t\t\t\talert(\"Application has been Rejected\");\n\t\t\t\twindow.location = \"staff_index_lvl0.php\";\n\t\t\t}\n\n\t\t\tacceptApplication_js = acceptApplication;\n\t\t\trejectApplication_js = rejectApplication;\n\t\t});\n\t\t</script>\n\t</head>\n\t<body class=\"parallax\">\n\t\t<div class=\"jumbotron header text-center\">\n\t\t\t<h1 class=\"display-4\">This is Header.</h1>\n\t\t\t<p>This is Sub-Header.</p>\n\t\t</div>\n\t\t<nav class=\"navbar bg-blue navbar-dark white sticky-top\" role=\"navigation\">\n\t\t\t<div class=\"container-fluid\">\n\t\t\t\t<button type=\"button\" class=\"navbar-toggler white\" data-toggle=\"collapse\"\n\t\t\t\tdata-target=\"#myNavbar\">\n\t\t\t\t<span class=\"navbar-toggler-icon\"></span>\n\t\t\t\t</button>\n\t\t\t\t<div class=\"navbar-header\">\n\t\t\t\t\t<a class=\"navbar-brand white\" href=\"#\">Menu</a>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"collapse navbar-collapse\" id=\"myNavbar\">\n\t\t\t\t\t<ul class=\"nav navbar-nav white\">\n\t\t\t\t\t\t<span class=\"line-br-white\"></span>\n\t\t\t\t\t\t<li class=\"nav-item\"><a href=\"#\" class=\"white nav-link\">Apply Scholarship</a></li>\n\t\t\t\t\t\t<span class=\"line-br-white\"></span>\n\t\t\t\t\t\t<li class=\"nav-item\"><a href=\"#\" class=\"white nav-link\">Review Scholarship - (Staffs only)</a></li>\n\t\t\t\t\t\t<span class=\"line-br-white\"></span>\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n\t\t\t\t<ul class=\"nav navbar-nav navbar-right\">\n\t\t\t\t\t<li><a href=\"logout.php\" class=\"white nav-link\" style=\"text-decoration: none;\">logout</a></li>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</nav>\n\t\t<div class=\"container water-drop\">\n\t\t\t<div class=\"display-4 text-center\">Application <?= $application_id ?></div>\n\t\t</div>\n\t\t<div class=\"application-container container\">\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tStudent Name:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"stud_name\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tFather Name:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"father_name\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tCollege Address:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"clg_address\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tLast Year Course:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"la_yr_course\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tCurrent Year Course:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"cu_yr_course\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tNumber of Arrear:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"no_of_arrear\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tEligible for Applying Scholarship:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"elig-for-scholarship\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tEligible for Next Exam:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"elig-for-next-exam\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tDepartment:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"dept\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tCaste:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"caste\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tClass:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"class\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tTemporary Address:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"temp-addr\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tPermanent Address:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"perm-addr\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tPrevious Year Scholarship Amount:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"prev-year-scholar-amt\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tHostel Check In Last Year:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"hostel-chk-in-la-year\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tHostel Check Out Last Year:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"hostel-chk-out-la-year\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tHostel Check In Current Year:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"hostel-chk-in-cu-year\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tHostel Check Out Current Year (Approx):\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"hostel-chk-out-cu-year\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5 form-group\">\n\t\t\t\t\t<p>Candidate's Behaviour Impression:</p>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<input type=\"text\" name=\"cand-behav-impr\" class=\"form-control form-control-main\" required />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5 form-group\">\n\t\t\t\t\t<p>Candidate's Previous Year Attendance:</p>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<input type=\"text\" name=\"cand-prev-yr-attend\" class=\"form-control form-control-main\" required />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-4\">\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-4\">\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-4\">\n\t\t\t\t\t<button type=\"button\" onclick=\"updateConductCert()\" class=\"btn btn-primary\">Update Details</button>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5 form-group\">\n\t\t\t\t\t<button class=\"btn-norm water-drop\" onclick=\"acceptApplication_js()\" id=\"btn-accept\" disabled>Accept</button>\n\t\t\t\t\t<!-- btn btn-lg btn-outline-success -->\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5 form-group\">\n\t\t\t\t\t<button type=\"button\" class=\"btn-norm water-drop\" data-toggle=\"modal\" data-target=\"#reject-modal\">Reject</button>\n\t\t\t\t\t<!-- btn btn-lg btn-outline-danger -->\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"modal fade\" id=\"reject-modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t\t\t<div class=\"modal-dialog\" role=\"document\">\n\t\t\t\t<div class=\"modal-content\">\n\t\t\t\t\t <div class=\"modal-header\">\n\t\t\t\t\t \t<h5 class=\"modal-title\" id=\"exampleModalLabel\">New Message</h5>\n\t\t\t\t\t \t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n\t\t\t\t\t </div>\n\t\t\t\t\t <div class=\"modal-body\">\n\t\t\t\t\t \t<form id=\"form-reject-modal\">\n\t\t\t\t\t \t\t<div class=\"form-group\">\n\t\t\t\t\t \t\t\t<label for=\"appilcation-id\" class=\"col-form-label\">Application Id:</label>\n\t\t\t\t\t \t\t\t<input type=\"text\" class=\"form-control\" id=\"appilcation-id\" name=\"appilcation-id\" readonly>\n\t\t\t\t\t \t\t</div>\n\t\t\t\t\t \t\t<div class=\"form-group\">\n\t\t\t\t\t \t\t\t<label for=\"reject-reason-msg\" class=\"col-form-label\">Rejection Message: <small class=\"text-muted\"> *Optional but Recommended</small></label>\n\t\t\t\t\t \t\t\t<textarea class=\"form-control\" id=\"reject-reason-msg\" name=\"reject-reason-msg\" placeholder=\"Eg. _____ document is not valid\"></textarea>\n\t\t\t\t\t \t\t</div>\n\t\t\t\t\t \t</form>\n\t\t\t\t\t </div>\n\t\t\t\t\t <div class=\"modal-footer\">\n\t\t\t\t\t \t<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n\t\t\t\t\t \t<button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Reject Application</button>\n\t\t\t\t\t </div>\n\t\t\t\t</div>\n\t\t\t</div>\t\n\t\t</div>\n\t\t<div class=\"footer white\">\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-sm white\">\n\t\t\t\t\t<p><a href=\"index.php\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Go to Home!\">Home</a></p>\n\t\t\t\t\t<p><a href=\"about.php\">About</a></p>\n\t\t\t\t\t<p><a href=\"contact.php\">Contact Us</a></p>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-sm white\">\n\t\t\t\t\t<p><a href=\"#\">Terms and Conditions</a></p>\n\t\t\t\t\t<p><a href=\"#\">Privacy Policy</a></p>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"clock\">\n\t\t\t\t\t<div id=\"Date\"></div>\n\t\t\t\t\t<ul>\n\t\t\t\t\t\t<li id=\"hours\"></li>\n\t\t\t\t\t\t<li id=\"point\">:</li>\n\t\t\t\t\t\t<li id=\"min\"></li>\n\t\t\t\t\t\t<li id=\"point\">:</li>\n\t\t\t\t\t\t<li id=\"sec\"></li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<p class=\"text-center\">Copyright &copy <script>document.write(new Date().getFullYear())</script> - EpicSoftwares.<br>An Unauthorized and Unofficial Software Development team.</p>\n\t\t\t<p class=\"text-center\">- A Beloved work of <span class=\"team-name\">BHAANN.</span></p>\n\t\t</div>\n\t</body>\n\t<script type=\"text/javascript\">\n\t\tfunction updateConductCert() {\n\t\t\talert(\"Data Updated!\");\n\t\t\tdocument.getElementById('btn-accept').disabled = false;\n\t\t}\n\t</script>\n</html>",
 			"file": "form_review_lvl1.php",
+			"file_size": 11789,
+			"file_write_time": 131951126215362260,
 			"settings":
 			{
 				"buffer_size": 11412,
-				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
+			"contents": "<?php\n\tinclude('session.php');\n\t$application_id = $_GET['app_id'];\n?>\n<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<meta charset=\"utf-8\">\n\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\t\t<script src=\"js/jquery.min.js\"></script>\n\t\t<script src=\"DT.js\"></script>\n\t\t<script src=\"js/bootstrap.bundle.min.js\"></script>\n\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"css/bootstrap.min.css\">\n\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"main.css\">\n\t\t<title>Application <?= $application_id ?></title>\n\t\t<script type=\"text/javascript\">\n\n\t\t\tvar acceptApplication_js, rejectApplication_js = null;\n\t\t\n\t\t$(document).ready(function() {\n\n\t\t\t$(\".col-md-5:odd\").addClass(\"text-left\");\n\t\t\t$(\".col-md-5:even\").addClass(\"text-right\");\n\n\t\t\tfunction updateData(response) {\n\n\t\t\t\t$(\"#stud_name\").html(response['stud_name']);\n\t\t\t\t$(\"#father_name\").html(response['father_name']);\n\t\t\t\t$(\"#dept\").html(response['dept']);\n\t\t\t\t$(\"#clg_address\").html(response['clg_address']);\n\t\t\t\t$(\"#la_yr_course\").html(response['la_yr_course']);\n\t\t\t\t$(\"#cu_yr_course\").html(response['cu_yr_course']);\n\t\t\t\t$(\"#no_of_arrear\").html(response['no_of_arrear']);\n\t\t\t\t$(\"#elig-for-scholarship\").html(\n\t\t\t\t\tresponse['elig_for_scholar'] == 1 ? \"Yes\" : \"No\"\n\t\t\t\t);\n\t\t\t\t$(\"#elig-for-next-exam\").html(\n\t\t\t\t\tresponse['elig_for_next_exam'] == 1 ? \"Yes\" : \"No\"\n\t\t\t\t);\n\t\t\t\t$(\"#caste\").html(response['cast']);\n\t\t\t\t$(\"#class\").html(response['class']);\n\t\t\t\t$(\"#temp-addr\").html(response['temp_address']);\n\t\t\t\t$(\"#perm-addr\").html(response['perm_address']);\n\t\t\t\t$(\"#prev-year-scholar-amt\").html(response['prev_yr_scholar_amt']);\n\t\t\t\t$(\"#hostel-chk-in-la-year\").html(response['hostel_chk_in_la_yr']);\n\t\t\t\t$(\"#hostel-chk-out-la-year\").html(response['hostel_chk_out_la_yr']);\n\t\t\t\t$(\"#hostel-chk-in-cu-year\").html(response['hostel_chk_in_cu_yr']);\n\t\t\t\t$(\"#hostel-chk-out-cu-year\").html(response['hostel_chk_out_cu_yr']);\n\t\t\t\t$(\"#cand-behav-impr\").html(response['cand_behav_impr']);\n\t\t\t\t$(\"#cand-prev-yr-attend\").html(response['cand_prev_yr_attend'] == 0 ? \"Not Updated\" : response['cand_prev_yr_attend']);\n\t\t\t}\n\n\t\t\tvar req = $.ajax({\n\t\t\turl: \"database/fetch_application_data.php\",\n\t\t\ttype: \"POST\",\n\t\t\tdata: {\n\t\t\t\"application_id\": \"<?= $application_id ?>\"\n\t\t\t},\n\t\t\tdataType: \"json\"\n\t\t\t});\n\n\t\t\treq.done(function(response, textStatus, jqXHr) {\n\t\t\t\n\t\t\t\tupdateData(response);\n\t\t\t\t// alert(response[row]['application_id']);\n\t\t\t});\n\n\t\t\treq.error(function(error, msg) {\n\t\t\talert(error + \": \" + msg);\n\t\t\t});\n\n\t\t\tfunction acceptApplication() {\n\t\t\t\t// alert(\"Application is being processed\");\n\t\t\t\tvar val = $('form').serialize();\n\n\t\t\t\treq =  $.ajax({\n\t\t\t\t\turl: \"database/\",\n\t\t\t\t\ttype: \"POST\",\n\t\t\t\t});\n\t\t\t}\n\n\t\t\t$(\"#reject-modal\").on('show.bs.modal', function (event) {\n\t\t\t\tvar app_id = \"<?= $application_id ?>\";\n\n\t\t\t\tvar modal = $(this);\n\t\t\t\tmodal.find('.modal-title').text(\"Reject Application: \" + app_id);\n\t\t\t\tmodal.find('.modal-body input').val(app_id);\n\n\t\t\t\tmodal.find('.modal-footer .btn-primary').on('click', function (evt) {\n\t\t\t\t\trejectApplication(app_id);\n\t\t\t\t});\n\t\t\t});\n\n\t\t\tfunction rejectApplication(application_id) {\n\t\t\t\talert(\"Application has been Rejected\");\n\t\t\t\twindow.location = \"staff_index_lvl0.php\";\n\t\t\t}\n\n\t\t\tacceptApplication_js = acceptApplication;\n\t\t\trejectApplication_js = rejectApplication;\n\t\t});\n\t\t</script>\n\t</head>\n\t<body class=\"parallax\">\n\t\t<div class=\"jumbotron header text-center\">\n\t\t\t<h1 class=\"display-4\">This is Header.</h1>\n\t\t\t<p>This is Sub-Header.</p>\n\t\t</div>\n\t\t<nav class=\"navbar bg-blue navbar-dark white sticky-top\" role=\"navigation\">\n\t\t\t<div class=\"container-fluid\">\n\t\t\t\t<button type=\"button\" class=\"navbar-toggler white\" data-toggle=\"collapse\"\n\t\t\t\tdata-target=\"#myNavbar\">\n\t\t\t\t<span class=\"navbar-toggler-icon\"></span>\n\t\t\t\t</button>\n\t\t\t\t<div class=\"navbar-header\">\n\t\t\t\t\t<a class=\"navbar-brand white\" href=\"#\">Menu</a>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"collapse navbar-collapse\" id=\"myNavbar\">\n\t\t\t\t\t<ul class=\"nav navbar-nav white\">\n\t\t\t\t\t\t<span class=\"line-br-white\"></span>\n\t\t\t\t\t\t<li class=\"nav-item\"><a href=\"#\" class=\"white nav-link\">Apply Scholarship</a></li>\n\t\t\t\t\t\t<span class=\"line-br-white\"></span>\n\t\t\t\t\t\t<li class=\"nav-item\"><a href=\"#\" class=\"white nav-link\">Review Scholarship - (Staffs only)</a></li>\n\t\t\t\t\t\t<span class=\"line-br-white\"></span>\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n\t\t\t\t<ul class=\"nav navbar-nav navbar-right\">\n\t\t\t\t\t<li><a href=\"logout.php\" class=\"white nav-link\" style=\"text-decoration: none;\">logout</a></li>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</nav>\n\t\t<div class=\"container water-drop\">\n\t\t\t<div class=\"display-4 text-center\">Application <?= $application_id ?></div>\n\t\t</div>\n\t\t<div class=\"application-container container\">\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tStudent Name:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"stud_name\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tFather Name:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"father_name\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tCollege Address:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"clg_address\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tLast Year Course:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"la_yr_course\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tCurrent Year Course:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"cu_yr_course\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tNumber of Arrear:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"no_of_arrear\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tEligible for Applying Scholarship:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"elig-for-scholarship\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tEligible for Next Exam:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"elig-for-next-exam\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tDepartment:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"dept\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tCaste:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"caste\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tClass:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"class\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tTemporary Address:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"temp-addr\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tPermanent Address:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"perm-addr\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tPrevious Year Scholarship Amount:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"prev-year-scholar-amt\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tHostel Check In Last Year:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"hostel-chk-in-la-year\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tHostel Check Out Last Year:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"hostel-chk-out-la-year\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tHostel Check In Current Year:\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"hostel-chk-in-cu-year\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\tHostel Check Out Current Year (Approx):\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"hostel-chk-out-cu-year\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p>Candidate's Behaviour Impression:</p>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"cand-behav-impr\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5 form-group\">\n\t\t\t\t\t<p>Candidate's Previous Year Attendance:</p>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t<p id=\"cand-prev-yr-attend\"></p>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-5 form-group\">\n\t\t\t\t\t<button class=\"btn-norm water-drop\" onclick=\"acceptApplication_js()\">Accept</button>\n\t\t\t\t\t<!-- btn btn-lg btn-outline-success -->\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-5 form-group\">\n\t\t\t\t\t<button type=\"button\" class=\"btn-norm water-drop\" data-toggle=\"modal\" data-target=\"#reject-modal\">Reject</button>\n\t\t\t\t\t<!-- btn btn-lg btn-outline-danger -->\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"modal fade\" id=\"reject-modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t\t\t<div class=\"modal-dialog\" role=\"document\">\n\t\t\t\t<div class=\"modal-content\">\n\t\t\t\t\t <div class=\"modal-header\">\n\t\t\t\t\t \t<h5 class=\"modal-title\" id=\"exampleModalLabel\">New Message</h5>\n\t\t\t\t\t \t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n\t\t\t\t\t </div>\n\t\t\t\t\t <div class=\"modal-body\">\n\t\t\t\t\t \t<form id=\"form-reject-modal\">\n\t\t\t\t\t \t\t<div class=\"form-group\">\n\t\t\t\t\t \t\t\t<label for=\"appilcation-id\" class=\"col-form-label\">Application Id:</label>\n\t\t\t\t\t \t\t\t<input type=\"text\" class=\"form-control\" id=\"appilcation-id\" name=\"appilcation-id\" readonly>\n\t\t\t\t\t \t\t</div>\n\t\t\t\t\t \t\t<div class=\"form-group\">\n\t\t\t\t\t \t\t\t<label for=\"reject-reason-msg\" class=\"col-form-label\">Rejection Message: <small class=\"text-muted\"> *Optional but Recommended</small></label>\n\t\t\t\t\t \t\t\t<textarea class=\"form-control\" id=\"reject-reason-msg\" name=\"reject-reason-msg\" placeholder=\"Eg. _____ document is not valid\"></textarea>\n\t\t\t\t\t \t\t</div>\n\t\t\t\t\t \t</form>\n\t\t\t\t\t </div>\n\t\t\t\t\t <div class=\"modal-footer\">\n\t\t\t\t\t \t<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n\t\t\t\t\t \t<button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Reject Application</button>\n\t\t\t\t\t </div>\n\t\t\t\t</div>\n\t\t\t</div>\t\n\t\t</div>\n\t\t<div class=\"footer white\">\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-sm white\">\n\t\t\t\t\t<p><a href=\"index.php\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Go to Home!\">Home</a></p>\n\t\t\t\t\t<p><a href=\"about.php\">About</a></p>\n\t\t\t\t\t<p><a href=\"contact.php\">Contact Us</a></p>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-sm white\">\n\t\t\t\t\t<p><a href=\"#\">Terms and Conditions</a></p>\n\t\t\t\t\t<p><a href=\"#\">Privacy Policy</a></p>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"clock\">\n\t\t\t\t\t<div id=\"Date\"></div>\n\t\t\t\t\t<ul>\n\t\t\t\t\t\t<li id=\"hours\"></li>\n\t\t\t\t\t\t<li id=\"point\">:</li>\n\t\t\t\t\t\t<li id=\"min\"></li>\n\t\t\t\t\t\t<li id=\"point\">:</li>\n\t\t\t\t\t\t<li id=\"sec\"></li>\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<p class=\"text-center\">Copyright &copy <script>document.write(new Date().getFullYear())</script> - EpicSoftwares.<br>An Unauthorized and Unofficial Software Development team.</p>\n\t\t\t<p class=\"text-center\">- A Beloved work of <span class=\"team-name\">BHAANN.</span></p>\n\t\t</div>\n\t</body>\n</html>",
 			"file": "form_review_lvl2.php",
+			"file_size": 11103,
+			"file_write_time": 131951126215402155,
 			"settings":
 			{
 				"buffer_size": 10745,
-				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
@@ -670,7 +668,7 @@
 			{
 				"buffer_size": 11529,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -679,7 +677,7 @@
 			{
 				"buffer_size": 11526,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -688,7 +686,7 @@
 			{
 				"buffer_size": 11532,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -737,6 +735,7 @@
 	},
 	"file_history":
 	[
+		"/D/wamp/www/httpdocs/proj/index.html",
 		"/C/Users/Haris/AppData/Roaming/Sublime Text 3/Packages/HTMLBeautify/HTMLBeautify.sublime-settings",
 		"/C/Users/Haris/AppData/Roaming/Sublime Text 3/Packages/User/JsFormat.sublime-settings",
 		"/C/Users/Haris/AppData/Roaming/Sublime Text 3/Packages/JsFormat/JsFormat.sublime-settings",
@@ -834,7 +833,7 @@
 	],
 	"find":
 	{
-		"height": 59.0
+		"height": 28.0
 	},
 	"find_in_files":
 	{
@@ -877,7 +876,7 @@
 	"groups":
 	[
 		{
-			"selected": 15,
+			"selected": 6,
 			"sheets":
 			[
 				{
@@ -899,6 +898,7 @@
 						],
 						"settings":
 						{
+							"auto_complete": false,
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
@@ -907,7 +907,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 23,
+					"stack_index": 22,
 					"type": "text"
 				},
 				{
@@ -929,6 +929,81 @@
 						],
 						"settings":
 						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
@@ -936,7 +1011,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 22,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -958,6 +1033,82 @@
 						],
 						"settings":
 						{
+							"auto_complete": false,
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
@@ -1090,6 +1241,7 @@
 						],
 						"settings":
 						{
+							"auto_complete": false,
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
@@ -1120,137 +1272,19 @@
 						],
 						"settings":
 						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 18,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 6,
-					"file": "index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8859,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.clone": -1,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										31,
-										33
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/angle_bracket.png",
-										"region.orangish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										0,
-										2
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content"
-							],
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 17,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
 					"file": "index.php",
 					"semi_transient": false,
 					"settings":
@@ -1262,12 +1296,13 @@
 						"selection":
 						[
 							[
-								1555,
-								1555
+								684,
+								662
 							]
 						],
 						"settings":
 						{
+							"auto_complete": false,
 							"bracket_highlighter.busy": false,
 							"bracket_highlighter.clone": -1,
 							"bracket_highlighter.clone_locations":
@@ -1276,8 +1311,8 @@
 								{
 									"1":
 									[
-										1306,
-										1307
+										1528,
+										1529
 									]
 								},
 								"icon":
@@ -1292,8 +1327,8 @@
 								{
 									"1":
 									[
-										1002,
-										1003
+										599,
+										600
 									]
 								},
 								"unmatched":
@@ -1302,6 +1337,36 @@
 							},
 							"bracket_highlighter.clone_regions":
 							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
@@ -1322,41 +1387,11 @@
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
+								"bh_unmatched_content"
 							],
 							"bracket_highlighter.locations":
 							{
@@ -1364,8 +1399,8 @@
 								{
 									"1":
 									[
-										1324,
-										1325
+										1528,
+										1529
 									]
 								},
 								"icon":
@@ -1380,8 +1415,8 @@
 								{
 									"1":
 									[
-										909,
-										910
+										599,
+										600
 									]
 								},
 								"unmatched":
@@ -1390,6 +1425,36 @@
 							},
 							"bracket_highlighter.regions":
 							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
@@ -1410,55 +1475,25 @@
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content"
+								"bh_unmatched_content"
 							],
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 188.8,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 7,
 					"file": "login.html",
 					"semi_transient": false,
 					"settings":
@@ -1574,11 +1609,11 @@
 						"translation.y": 1329.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 8,
 					"file": "login.php",
 					"semi_transient": false,
 					"settings":
@@ -1677,11 +1712,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 16,
+					"stack_index": 18,
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 9,
 					"file": "login_auth_staff.php",
 					"semi_transient": false,
 					"settings":
@@ -1781,11 +1816,11 @@
 						"translation.y": 254.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 12,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 10,
 					"file": "login_auth_stud.php",
 					"semi_transient": false,
 					"settings":
@@ -1885,11 +1920,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 15,
+					"stack_index": 17,
 					"type": "text"
 				},
 				{
-					"buffer": 12,
+					"buffer": 11,
 					"file": "login_redirect.php",
 					"semi_transient": false,
 					"settings":
@@ -1914,11 +1949,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 14,
+					"stack_index": 16,
 					"type": "text"
 				},
 				{
-					"buffer": 13,
+					"buffer": 12,
 					"file": "logout.php",
 					"semi_transient": false,
 					"settings":
@@ -1942,11 +1977,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
-					"buffer": 14,
+					"buffer": 13,
 					"file": "main.css",
 					"semi_transient": false,
 					"settings":
@@ -2086,31 +2121,26 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
@@ -2121,26 +2151,31 @@
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
 								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content"
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
 							],
 							"syntax": "Packages/CSS/CSS.sublime-syntax"
 						},
@@ -2148,11 +2183,11 @@
 						"translation.y": 995.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 15,
+					"buffer": 14,
 					"file": "form_review_lvl0.php",
 					"semi_transient": false,
 					"settings":
@@ -2164,8 +2199,8 @@
 						"selection":
 						[
 							[
-								9213,
-								9213
+								455,
+								455
 							]
 						],
 						"settings":
@@ -2267,8 +2302,8 @@
 								{
 									"1":
 									[
-										9124,
-										9129
+										401,
+										405
 									]
 								},
 								"icon":
@@ -2283,8 +2318,8 @@
 								{
 									"1":
 									[
-										9124,
-										9129
+										401,
+										405
 									]
 								},
 								"unmatched":
@@ -2293,74 +2328,74 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
 							],
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2021.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 16,
+					"buffer": 15,
 					"file": "form_review_lvl1.php",
 					"semi_transient": false,
 					"settings":
@@ -2476,11 +2511,11 @@
 						"translation.y": 5859.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 17,
+					"buffer": 16,
 					"file": "form_review_lvl2.php",
 					"semi_transient": false,
 					"settings":
@@ -2533,74 +2568,74 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
 							],
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 5707.0,
+						"translation.y": 1128.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 18,
+					"buffer": 17,
 					"file": "session.php",
 					"semi_transient": false,
 					"settings":
@@ -2700,11 +2735,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
-					"buffer": 19,
+					"buffer": 18,
 					"file": "staff_index.php",
 					"semi_transient": false,
 					"settings":
@@ -2820,11 +2855,11 @@
 						"translation.y": 513.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 20,
+					"buffer": 19,
 					"file": "staff_index_lvl0.php",
 					"semi_transient": false,
 					"settings":
@@ -2929,24 +2964,24 @@
 								{
 									"1":
 									[
-										3032,
-										3033
+										906,
+										907
 									]
 								},
 								"icon":
 								{
 									"1":
 									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"region.purplish"
+										"Packages/BracketHighlighter/icons/double_quote.png",
+										"region.greenish"
 									]
 								},
 								"open":
 								{
 									"1":
 									[
-										901,
-										902
+										862,
+										863
 									]
 								},
 								"unmatched":
@@ -2955,36 +2990,26 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
@@ -2995,35 +3020,45 @@
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
 							],
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 387.2,
+						"translation.y": 387.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 21,
+					"buffer": 20,
 					"file": "staff_index_lvl1.php",
 					"semi_transient": false,
 					"settings":
@@ -3128,24 +3163,24 @@
 								{
 									"1":
 									[
-										3251,
-										3252
+										3240,
+										3241
 									]
 								},
 								"icon":
 								{
 									"1":
 									[
-										"Packages/BracketHighlighter/icons/double_quote.png",
-										"region.greenish"
+										"Packages/BracketHighlighter/icons/tag.png",
+										"region.orangish"
 									]
 								},
 								"open":
 								{
 									"1":
 									[
-										3222,
-										3223
+										3207,
+										3208
 									]
 								},
 								"unmatched":
@@ -3154,61 +3189,61 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
 							],
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
 							"tab_size": 2,
@@ -3218,11 +3253,11 @@
 						"translation.y": 1451.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 22,
+					"buffer": 21,
 					"file": "staff_index_lvl2.php",
 					"semi_transient": false,
 					"settings":
@@ -3363,36 +3398,26 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
@@ -3403,21 +3428,31 @@
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
 							],
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
 							"tab_size": 2,
@@ -3427,11 +3462,11 @@
 						"translation.y": 1497.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 23,
+					"buffer": 22,
 					"file": "welcome.php",
 					"semi_transient": false,
 					"settings":
@@ -3615,7 +3650,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 15,
 					"type": "text"
 				}
 			]
