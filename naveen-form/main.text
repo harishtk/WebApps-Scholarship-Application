@@ -1,0 +1,165 @@
+/*naveen created by stratargy*/
+/*
+
+
+
+ 
+try  to win no failur.....
+
+
+
+*/
+ /*.form-group {
+  position: relative;
+  margin-bottom: 2.5rem;
+  padding-left: 1px;
+  text-align:left;
+
+}*/
+/*input[type="radio"]{
+ width: 18px;
+ height: 18px;
+ border:4px;
+ color: red;
+
+}
+input[type="date"]{
+  border-radius: 5px;
+  max-width: 100rem;
+  max-height: 100rem;
+  min-width: 15%;
+  min-height: 20%;
+  
+}*/
+
+  /*.form-group {
+  position: relative;
+  margin-bottom: 5rem;
+}*/
+
+.form-label {
+  position: absolute;
+  top: 0;
+  padding: 15px 2px 0 13px;
+  transition: all 200ms;
+  opacity: 0.5;
+  left: 30px;
+
+}
+
+.form-control-input:focus ~ .form-label,
+.form-control-input:valid ~ .form-label
+ {
+  font-size: 100%;
+  transform: translate3d(-40%, -120%, 0);
+  opacity: 2;
+ 
+  }
+ 
+ 
+ /* .jumbotron{
+      margin-top: 50px;
+    border-radius: 15px;
+   background-color: #ccc;
+    padding: 30px;
+    opacity: 0.9;
+  }*/
+  .form-control-texta:focus ~ .form-label,
+.form-control-texta:valid ~ .form-label
+ {
+  font-size: 100%;
+  transform: translate3d(-27%, -120%, 0);
+  opacity: 2;
+  width:100%;
+ 
+  }
+ 
+
+  .parallax{
+    background-image: url(nk.jpg);
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+  }
+  
+  .inputWithIcon .form-control-input{
+    padding-left: 30px;
+    text-align:left;
+  }
+  .inputWithIcon{
+    position: relative;
+    
+  }
+  .inputWithIcon span{
+    position: absolute;
+    top:8px;
+    left: 0px;
+    padding:10px 10px;
+    color: #aaa;
+    transition: 0.5s;
+  }
+  .inputWithIcon .form-control-input:focus ~ .glyphicon {
+    color: dodgerblue;
+
+  }
+   
+
+.inputWithIcon textarea:focus ~ .glyphicon{
+  color:dodgerblue;
+}
+ .inputWithIcon .select-opt{
+    padding-left: 35px;
+    text-align:left;
+  }
+
+
+.inputWithIcon .select-opt:focus ~ .glyphicon{
+  color: dodgerblue;
+}
+.highlight {
+  position:absolute;
+  height:50%; 
+  width:100%; 
+  top:15%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+.form-control:focus ~ .highlight , .floating-select:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+@-webkit-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to  { width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to  { width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to  { width:0; background:transparent; }
+}
+  
+/*.container-agree{
+  margin-top:50px;
+  height: 50%;
+  max-width: 100%;
+  background-color: white;
+  box-shadow: 2px 2px 4px 5px rgba(0,0,0,1);
+  border-radius:5px;
+  padding: 10px;
+
+}*/
+img{
+  height: 150px;
+  width: 150px;
+  box-shadow: 2px 2px 8px 8px white;
+  padding: 10px;
+  margin-left: 140px;
+  margin-right: 50px;
+  align-items: center;
+  top:5px;
+}
