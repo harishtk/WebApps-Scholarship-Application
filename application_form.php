@@ -307,6 +307,10 @@
 								</div>
 							</div>
 
+							<div class="form-group-lg">
+								<a href="upload_docs.php"><button type="button" class="btn btn-primary btn-lg">Upload Documents</button></a>
+							</div>
+
 							<div class="form-group">
 								 <button type="submit" class="btn-submit water-drop">Submit</button>
 							</div>
