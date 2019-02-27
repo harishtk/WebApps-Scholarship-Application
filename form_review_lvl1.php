@@ -15,12 +15,14 @@
 		<title>Application <?= $application_id ?></title>
 		<script type="text/javascript">
 
-			var acceptApplication_js, rejectApplication_js = null;
+		var acceptApplication_js, rejectApplication_js, updateConductCert_js = null;
 		
 		$(document).ready(function() {
 
 			$(".col-md-5:odd").addClass("text-left");
 			$(".col-md-5:even").addClass("text-right");
+
+			$('#btn-accept').css("display", "none");
 
 			function updateData(response) {
 
@@ -46,8 +48,8 @@
 				$("#hostel-chk-out-la-year").html(response['hostel_chk_out_la_yr']);
 				$("#hostel-chk-in-cu-year").html(response['hostel_chk_in_cu_yr']);
 				$("#hostel-chk-out-cu-year").html(response['hostel_chk_out_cu_yr']);
-				$("#cand-behav-impr").html(response['cand_behav_impr']);
-				$("#cand-prev-yr-attend").html(response['cand_prev_yr_attend'] == 0 ? "Not Updated" : response['cand_prev_yr_attend']);
+				// $("#cand-behav-impr").html(response['cand_behav_impr']);
+				// $("#cand-prev-yr-attend").html(response['cand_prev_yr_attend'] == 0 ? "Not Updated" : response['cand_prev_yr_attend']);
 			}
 
 			var req = $.ajax({
@@ -70,12 +72,34 @@
 			});
 
 			function acceptApplication() {
-				// alert("Application is being processed");
-				var val = $('form').serialize();
+				alert("Application is being processed");
+				var application_id = "<?= $_GET['app_id'] ?>";
+				var valid_code = 1;
+
+				// alert('<?= $_SESSION['staff_level'] ?>');
+				// alert('<?= $_SESSION['login_staff'] ?>');
 
 				req =  $.ajax({
-					url: "database/",
+					url: "database/validate_application.php",
 					type: "POST",
+					data: {
+						'application_id':application_id,
+						'valid_code':valid_code,
+						'staff_level': '<?= $_SESSION['staff_level'] ?>',
+						'staff':'<?= $_SESSION['login_staff'] ?>'
+					},
+					dataType: 'json'
+				});
+
+				req.done(function (response, textStatus) {
+					alert(response['msg']);
+					// for ( var key in response )
+					// 	alert(response[key]);
+
+				});
+
+				req.error(function (error, msg) {
+					alert(error + ": " + msg);
 				});
 			}
 
@@ -86,19 +110,92 @@
 				modal.find('.modal-title').text("Reject Application: " + app_id);
 				modal.find('.modal-body input').val(app_id);
 
+
 				modal.find('.modal-footer .btn-primary').on('click', function (evt) {
-					rejectApplication(app_id);
+					$('#form-reject-modal').submit();
 				});
 			});
 
 			function rejectApplication(application_id) {
-				alert("Application has been Rejected");
-				window.location = "staff_index_lvl0.php";
+				// alert("Application has been Rejected");
+				// window.location = "staff_index_lvl0.php";
 			}
+
+			$('form').submit(function (evt) {
+				$('#info-text').text("Updating.. Please wait");
+				evt.preventDefault();
+
+				val = $(this).serialize();
+
+				var req = $.ajax({
+					url: 'database/update_conduct_cert.php',
+					method: 'POST',
+					data: val,
+					dataType: 'json'
+				});
+
+				req.done(function (response, textStatus, jqXHr) {
+					
+					$('#info-text').text("Update Complete. Message: " + response['msg']);
+
+					$('#btn-accept').css("display", "");
+					$('#btn-update').prop("disabled", "true");
+					$('form input').prop("disabled", "true");
+				});
+
+				req.error(function (error, msg) {
+					alert(error + ": " + msg);
+				});
+
+			});
+
+			$('#form-reject-modal').submit(function (evt) {
+				evt.preventDefault();
+		
+				alert("Application is being rejected");
+				var application_id = "<?= $_GET['app_id'] ?>";
+				var valid_code = 2;
+				var rejection_msg = $('#reject-reason-msg').val();
+
+				// alert('<?= $_SESSION['staff_level'] ?>');
+				// alert('<?= $_SESSION['login_staff'] ?>');
+
+
+
+				req =  $.ajax({
+					url: "database/validate_application.php",
+					type: "POST",
+					data: {
+						'application_id':application_id,
+						'valid_code':valid_code,
+						'staff_level': '<?= $_SESSION['staff_level'] ?>',
+						'staff':'<?= $_SESSION['login_staff'] ?>',
+						'rejection_msg':rejection_msg
+					}
+					// dataType: 'json'
+				});
+
+				req.done(function (response, textStatus) {
+					// alert(response['msg']);
+					alert(response);
+					// for ( var key in response )
+					// 	alert(response[key]);
+				
+				});
+
+				req.error(function (error, msg) {
+					alert(error + ": " + msg);
+				});
+			});
 
 			acceptApplication_js = acceptApplication;
 			rejectApplication_js = rejectApplication;
 		});
+
+		// function updateConductCert_js() {
+		// 	alert("Data Updated!");
+		// 	document.getElementById('btn-accept').disabled = false;
+		// }
 		</script>
 	</head>
 	<body class="parallax">
@@ -277,38 +374,42 @@
 					<p id="hostel-chk-out-cu-year"></p>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-5 form-group">
-					<p>Candidate's Behaviour Impression:</p>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<input type="text" name="cand-behav-impr" class="form-control form-control-main" required />
+			<form method="POST" action="database/update_conduct_cert.php" id="conduct-cert">
+				<div class="row">
+					<div class="col-md-5 form-group">
+						<p>Candidate's Behaviour Impression:</p>
+					</div>
+					<div class="col-md-5">
+						<div class="form-group">
+							<input type="text" name="cand-behav-impr" class="form-control form-control-main" required placeholder="Eg. Good" />
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5 form-group">
-					<p>Candidate's Previous Year Attendance:</p>
-				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<input type="text" name="cand-prev-yr-attend" class="form-control form-control-main" required />
+				<div class="row">
+					<div class="col-md-5 form-group">
+						<p>Candidate's Previous Year Attendance:</p>
+					</div>
+					<div class="col-md-5">
+						<div class="form-group">
+							<input type="text" name="cand-prev-yr-attend" class="form-control form-control-main" required placeholder="Eg. 92%" />
+						</div>
 					</div>
 				</div>
-			</div>
+				<input type="hidden" name="application_id" value="<?= $_GET['app_id'] ?>">
+				<div class="row">
+					<div class="col-md-4">
+					</div>
+					<div class="col-md-4">
+					</div>
+					<div class="col-md-4">
+						<button type="submit" onclick="updateConductCert_js()" class="btn btn-primary" id="btn-update" aria-describedby="#info-text"><i class="fa fa-upload"></i>Update Details</button>
+						<small class="text-muted p-3"><span id="info-text"></span></small>
+					</div>
+				</div>
+			</form>
 			<div class="row">
-				<div class="col-md-4">
-				</div>
-				<div class="col-md-4">
-				</div>
-				<div class="col-md-4">
-					<button type="button" onclick="updateConductCert()" class="btn btn-primary">Update Details</button>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5 form-group">
-					<button class="btn-norm water-drop" onclick="acceptApplication_js()" id="btn-accept" disabled>Accept</button>
+				<div class="col-md-5 form-group" id="btn-accept">
+					<button class="btn-norm water-drop" onclick="acceptApplication_js()">Accept</button>
 					<!-- btn btn-lg btn-outline-success -->
 				</div>
 				<div class="col-md-5 form-group">
@@ -322,24 +423,24 @@
 				<div class="modal-content">
 					 <div class="modal-header">
 					 	<h5 class="modal-title" id="exampleModalLabel">New Message</h5>
-					 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
 					 </div>
 					 <div class="modal-body">
 					 	<form id="form-reject-modal">
 					 		<div class="form-group">
-					 			<label for="appilcation-id" class="col-form-label">Application Id:</label>
+					 			<label for="appilcation-id" class="col-form-label"><i class="fa fa-file-text-o"></i>Application Id:</label>
 					 			<input type="text" class="form-control" id="appilcation-id" name="appilcation-id" readonly>
 					 		</div>
 					 		<div class="form-group">
-					 			<label for="reject-reason-msg" class="col-form-label">Rejection Message: <small class="text-muted"> *Optional but Recommended</small></label>
+					 			<label for="reject-reason-msg" class="col-form-label"><i class="fa fa-pencil-square-o"></i>Rejection Message: <small class="text-muted"> *Optional but Recommended</small></label>
 					 			<textarea class="form-control" id="reject-reason-msg" name="reject-reason-msg" placeholder="Eg. _____ document is not valid"></textarea>
 					 		</div>
-					 	</form>
-					 </div>
-					 <div class="modal-footer">
-					 	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					 	<button type="button" class="btn btn-primary" data-dismiss="modal">Reject Application</button>
-					 </div>
+						 </div>
+						 <div class="modal-footer">
+						 	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						 	<button type="submit" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"a></i>Reject Application</button>
+						 </div>
+					 </form>
 				</div>
 			</div>	
 		</div>
@@ -370,9 +471,6 @@
 		</div>
 	</body>
 	<script type="text/javascript">
-		function updateConductCert() {
-			alert("Data Updated!");
-			document.getElementById('btn-accept').disabled = false;
-		}
+		
 	</script>
 </html>

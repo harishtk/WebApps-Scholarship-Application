@@ -11,6 +11,7 @@
     <script src="dem1.js"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="fa/css/font-awesome.min.css">
     <title>Welcome</title>
     <script type="text/javascript">
 
@@ -20,8 +21,10 @@
     
     $(document).ready(function() {
       var username = <?= $_SESSION['login_stud']; ?>;
-      
+      var application_id = null;
       var req = null;
+
+      $('#loading').css('display', '');
 
       req = $.ajax({
         url: 'database/fetch_stud_info.php',
@@ -43,8 +46,28 @@
           $("#dob").html(response['dob']);
           $("#course_dur").html(response['course_dur']);
           $("#blood_grp").html(response['blood_grp']);
+
+          // alert(response['application_id']);
+          // alert(response['is_rejected'] == false ? "Not Available" : "Available");
+          // if ( response['application_available'] != "" ) 
+          //   alert(response['application_id']);
+          // else 
+          //   alert(response['application_id']);
+          //   
+          
+          if ( response['application_available'] ) {
+
+            $('#nav-apply').css("display", "none");
+
+            if ( response['is_rejected'] == true ) {
+              $('#applicaiton-rejected').css("display", "");
+              $('#nav').css("display", "none");
+            }
+
+          } 
         }
         
+        $('#loading').css('display', 'none');
 
       }
 
@@ -56,6 +79,13 @@
       req.error(function(response, error) {
         alert("Error: " + error);
       });
+
+      $('#modal-reject-msg').on('show.bs.modal', function (evt) {
+        // var app_id = $(evt.relatedTarget).data('appid');
+
+        $(this).find('#modal-title').text("Application Id: " + "eg");
+      });
+
     });
     </script>
   </head>
@@ -66,11 +96,11 @@
     </div>
     <nav class="navbar bg-blue navbar-dark sticky-top" role="navigation">
       <div class="container-fluid">
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
-        <span class="navbar-toggler-icon"></span>
+        <button type="button" class="navbar-toggler text-light" data-toggle="collapse" data-target="#myNavbar">
+        <!-- <span class="glyphicon glyphicon-align-justify"></span> --><i class="fa fa-bars"></i>
         </button>
         <div class="navbar-header">
-          <p class="navbar-brand white">Menu</p>
+          <p class="navbar-brand white"><!-- <i class="fa fa-user"></i> -->Menu</p>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav white">
@@ -83,7 +113,7 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="logout.php" class="white nav-link" style="text-decoration: none;">
-            <span class="glyphicon glyphicon-log-out white">Logout</span>
+            <span class="glyphicon glyphicon-log-out white"></span>Logout
           </a></li>
         </ul>
       </div>
@@ -112,6 +142,15 @@
         </div>
       </div>
     </div>-->
+     <div class="container max-width">
+      <div class="load-wrap text-center" style="display: none;" id="loading">
+          <div class="load-3">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>  
+          <p>Loading</p>
+      </div>
     <div class="container stud-profile">
       <div class="row">
         <div class="col-md-4">
@@ -120,9 +159,9 @@
           </div>
         </div>
         <div class="col-md-6">
-          <div class="profile-head text-center">
-            
+          <div class="profile-head text-center">         
             <h5 id="name">
+
             NAVINKUMAR.S
             </h5>
             <h6 class="text-muted">
@@ -165,7 +204,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6">
-                  <label>Branch:</label>
+                  <label><i class="fa fa-share-alt"></i>Branch:</label>
                 </div>
                 <div class="col-md-6">
                   <p id="dept">cse/reg</p>
@@ -173,7 +212,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6">
-                  <label>year:</label>
+                  <label><i class="fa fa-calendar"></i>Year:</label>
                 </div>
                 <div class="col-md-6">
                   <p id="course_dur">2016-2019</p>
@@ -181,7 +220,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6">
-                  <label>Email:</label>
+                  <label><i class="fa fa-envelope"></i>Email:</label>
                 </div>
                 <div class="col-md-6">
                   <p id="email">******@gmail.com</p>
@@ -199,7 +238,7 @@
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <div class="row">
                 <div class="col-md-6">
-                  <label>DOB:</label>
+                  <label><i class="fa fa-calendar-o"></i>DOB:</label>
                 </div>
                 <div class="col-md-6">
                   <p id="dob">00/00/0000</p>
@@ -208,7 +247,7 @@
               
               <div class="row">
                 <div class="col-md-6">
-                  <label>Blood Group: </label>
+                  <label><span class="glyphicon glyphicon-tint"></span>Blood Group: </label>
                 </div>
                 <div class="col-md-6">
                   <p id="blood_grp">2</p>
@@ -226,23 +265,47 @@
           </div>
         </div>
       </div>
-      <div class="row justify-content-center text-center">
-        <div class="col-sm-6">
-          <button class="btn-big water-drop" aria-describedby="#apply-desc" onclick="goTo('application_form.php')">Apply</button>
+      <div class="row justify-content-center text-center" id="nav"> 
+        <div class="col-sm-6" id="nav-apply">
+          <button class="btn-big water-drop" aria-describedby="#apply-desc" onclick="goTo('application_form.php')"><i class="fa fa-pencil"></i>Apply</button>
           <small id="apply-desc">Apply for Scholarship</small>
         </div>
-        <div class="col-sm-6">
-          <button class="btn-big water-drop" aria-describedby="#track-application">Track</button>
+        <div class="col-sm-6" id="nav-track">
+          <button class="btn-big water-drop" aria-describedby="#track-application"><i class="fa fa-search"></i>Track</button>
           <small id="track-application">Application Status</small>
+        </div>
+      </div>
+      <div class="row justify-content-center text-center" id="applicaiton-rejected" style="display: none;">
+      <div class="col-sm">
+        <button class="btn-big water-drop" aria-describedby="#reject-msg" disabled>Application Rejected!</button>
+        <small id="reject-msg"><a href="#" data-toggle="modal" data-target="#modal-reject-msg" data-appid="example" class="text-danger bolder">Tell Me What Happened</a></small>
+      </div>
+    </div>
+    </div>
+    <div class="modal fade" id="modal-reject-msg" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-title">Demo title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">I Understand</button>
+          </div>
         </div>
       </div>
     </div>
     <div class="footer white">
       <div class="row">
         <div class="col-sm white">
-          <p><a href="#">Home</a></p>
-          <p><a href="#">About</a></p>
-          <p><a href="#">Contact Us</a></p>
+          <p><span class="glyphicon glyphicon-home"></span><a href="#">Home</a></p>
+          <p><span class="glyphicon glyphicon-info-sign"></span><a href="#">About</a></p>
+          <p><span class="glyphicon glyphicon-earphone"></span><a href="#">Contact Us</a></p>
         </div>
         <div class="col-sm white">
           <p><a href="#">Terms and Conditions</a></p>

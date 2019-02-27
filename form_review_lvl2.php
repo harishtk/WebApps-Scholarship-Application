@@ -70,12 +70,34 @@
 			});
 
 			function acceptApplication() {
-				// alert("Application is being processed");
-				var val = $('form').serialize();
+				alert("Application is being processed");
+				var application_id = "<?= $_GET['app_id'] ?>";
+				var valid_code = 1;
+
+				// alert('<?= $_SESSION['staff_level'] ?>');
+				// alert('<?= $_SESSION['login_staff'] ?>');
 
 				req =  $.ajax({
-					url: "database/",
+					url: "database/validate_application.php",
 					type: "POST",
+					data: {
+						'application_id':application_id,
+						'valid_code':valid_code,
+						'staff_level': '<?= $_SESSION['staff_level'] ?>',
+						'staff':'<?= $_SESSION['login_staff'] ?>'
+					},
+					dataType: 'json'
+				});
+
+				req.done(function (response, textStatus) {
+					alert(response['msg']);
+					// for ( var key in response )
+					// 	alert(response[key]);
+
+				});
+
+				req.error(function (error, msg) {
+					alert(error + ": " + msg);
 				});
 			}
 
@@ -86,15 +108,81 @@
 				modal.find('.modal-title').text("Reject Application: " + app_id);
 				modal.find('.modal-body input').val(app_id);
 
+
 				modal.find('.modal-footer .btn-primary').on('click', function (evt) {
-					rejectApplication(app_id);
+					$('#form-reject-modal').submit();
 				});
 			});
 
 			function rejectApplication(application_id) {
-				alert("Application has been Rejected");
-				window.location = "staff_index_lvl0.php";
+				// alert("Application has been Rejected");
+				// window.location = "staff_index_lvl0.php";
 			}
+
+			$('form').submit(function (evt) {
+				$('#info-text').text("Updating.. Please wait");
+				evt.preventDefault();
+
+				val = $(this).serialize();
+
+				var req = $.ajax({
+					url: 'database/update_conduct_cert.php',
+					method: 'POST',
+					data: val,
+					dataType: 'json'
+				});
+
+				req.done(function (response, textStatus, jqXHr) {
+					
+					$('#info-text').text("Update Complete. Message: " + response['msg']);
+
+					$('#btn-accept').css("display", "");
+					$('#btn-update').prop("disabled", "true");
+					$('form input').prop("disabled", "true");
+				});
+
+				req.error(function (error, msg) {
+					alert(error + ": " + msg);
+				});
+
+			});
+
+			$('#form-reject-modal').submit(function (evt) {
+				evt.preventDefault();
+		
+				alert("Application is being rejected");
+				var application_id = "<?= $_GET['app_id'] ?>";
+				var valid_code = 2;
+				var rejection_msg = $('#reject-reason-msg').val();
+
+				// alert('<?= $_SESSION['staff_level'] ?>');
+				// alert('<?= $_SESSION['login_staff'] ?>');
+
+				req =  $.ajax({
+					url: "database/validate_application.php",
+					type: "POST",
+					data: {
+						'application_id':application_id,
+						'valid_code':valid_code,
+						'staff_level': '<?= $_SESSION['staff_level'] ?>',
+						'staff':'<?= $_SESSION['login_staff'] ?>',
+						'rejection_msg':rejection_msg
+					},
+					dataType: 'json'
+				});
+
+				req.done(function (response, textStatus) {
+					// alert(response['msg']);
+					alert(response);
+					// for ( var key in response )
+					// 	alert(response[key]);
+				
+				});
+
+				req.error(function (error, msg) {
+					alert(error + ": " + msg);
+				});
+			});
 
 			acceptApplication_js = acceptApplication;
 			rejectApplication_js = rejectApplication;
@@ -321,12 +409,12 @@
 					 			<label for="reject-reason-msg" class="col-form-label">Rejection Message: <small class="text-muted"> *Optional but Recommended</small></label>
 					 			<textarea class="form-control" id="reject-reason-msg" name="reject-reason-msg" placeholder="Eg. _____ document is not valid"></textarea>
 					 		</div>
-					 	</form>
-					 </div>
-					 <div class="modal-footer">
-					 	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					 	<button type="button" class="btn btn-primary" data-dismiss="modal">Reject Application</button>
-					 </div>
+						 </div>
+						 <div class="modal-footer">
+						 	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						 	<button type="button" class="btn btn-primary" data-dismiss="modal">Reject Application</button>
+						 </div>
+					</form>
 				</div>
 			</div>	
 		</div>
