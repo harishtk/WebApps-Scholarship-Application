@@ -1,344 +1,423 @@
 <?php
-
 	include('session.php');
-
 ?>
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Application Form</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="main.css">
-	<title>Welcome</title>
-</head>
-<body style="font-family: verdana;" class="parallax">
-	<div class="jumbotron header text-center">
-    	<h1>This is Header.</h1>
-    	<p>This is Sub-Header.</p>
-  	</div>	
-  	<nav class="navbar bg-blue navbar-dark sticky-top" role="navigation">
-    	<div class="container-fluid">
-    	    	<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
-        		<span class="navbar-toggler-icon"></span>
-      			</button>
-            <div class="navbar-header">
-      			   <p class="navbar-brand white">Menu</p>
-      		  </div>
-      	<div class="collapse navbar-collapse" id="myNavbar">
-        	<ul class="nav navbar-nav white">
-          	<span class="line-br-white"></span>
-          		<li class="nav-item"><a href="#" class="white nav-link menu">Apply Scholarship</a></li>
-          		<span class="line-br-white"></span>
-	          <li class="nav-item"><a href="#" class="white nav-link menu">Review Scholarship - (Staffs only)</a></li>
-    	      <span class="line-br-white-"></span>
-        	</ul>
-      	</div>
-      	<ul class="nav navbar-nav navbar-right">
-        	  <li><a href="logout.php" class="white nav-link" style="text-decoration: none;">
-        	  	Logout
-        	  </a></li>
-      	</ul>
-    	</div>
-  	</nav>
-
-  	<div class="application-container container">
-  		<h1 class="text-center">Welcome!</h1>
-  		<h3 class="text-center">Application Form comes here :)</h3>
-  		<!-- Form style by Naveen  -->
-
-		<!-- New Form from Naveen -->
-		<div class="form-container">
-			<form method="POST" action="application_submiter.php">
-					
-			<div class="row">
-				<div class="col-lg-6  col-sm-6 col-md-6">
-					 <div class="form-group">
-						<div class="inputWithIcon">
-								<input type="text" id="text_reg_no" class="form-control form-control-input"  >
-								<i class="glyphicon glyphicon-education"></i>
-								<span class="highlight"></span>
-					 	   		<label class="form-label" for="text_reg_no">Reg NO</label>
-					   		</div>
-					   	</div>
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-6 ">
-					 <div class="form-group">
-						<div class="inputWithIcon">
-							<input type="text" id="text_stud_name" class="form-control form-control-input" >
-							<i class="glyphicon glyphicon-user"></i>
-							<span class="highlight"></span>
-				 	   		<label class="form-label" for="text_stud_name">Student Name</label>
-				   		</div>
-				   	</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-6 col-md-6 col-sm-6 ">
-					 <div class="form-group">
-						<div class="inputWithIcon">
-							<input type="text" id="text_father_name" class="form-control form-control-input" >
-							<i class="glyphicon glyphicon-user"></i>
-							<span class="highlight"></span>
-				 	   		<label class="form-label" for="text_father_name">Father Name</label>
-				   		</div>
-				   	</div>
-				</div>
-				<div class="col-lg-6 col-sm-6 col-md-6 ">
-			 		<div class="form-group">
-						<div class="inputWithIcon">
-							<input type="text" id="text_caste" class="form-control form-control-input" >
-							<i class="glyphicon glyphicon-flag"></i>
-							<span class="highlight"></span>
-		 	   				<label class="form-label" for="text_cast">Caste</label>
-		   				</div>
-		   			</div>
-		   		</div>
-		   	</div>			
-
-			<div class="row">
-				 <div class="col-lg-6 col-sm-6 col-md-6">
-				 	<div class=" form-group form-group-lg">
-				 		<div class="input-group input-group-lg">
-				 			<select class="custom-select" id="sel_dept">
-				 				<option selected>choose dept:</option>
-				 				<option value="1">Computer Sciense Engineering</option>
-				 				<option value="2">Civil</option>
-				 				<option value="3">Mechanical</option>
-				 				<option value="4">Polymer</option>
-				 				<option value="5">Plastic</option>
-				 				<option value="6">Electrical And Elecronical</option>
-				 			</select>
-				 		</div>
-				 	</div>							
-				</div>
-				 <div class="col-lg-6 col-sm-6 col-md-6">
-				 	<div class="form-group form-group-lg">
-				 		<div class="input-group input-group-lg">
-				 			<select class="custom-select" id="sel_class">
-				 				<option selected>choose class:</option>
-				 				<option value="1">BC</option>
-				 				<option value="2">MBC</option>
-				 				<option value="3">AC</option>
-				 				<option value="4">DC/BC</option>
-				 			</select>
-				 		</div>
-				 	</div>							
-				</div>
-			</div>
-
-			<div class="form-group text-center form-group-lg">
-				<div class="inputWithIcon">
-					<textarea  class="form-control form-control-texta"  rows="5" id="texta_clg_address" type="text" ></textarea> 
-					<i class="glyphicon glyphicon-pencil"></i>
-					<span class="highlight"></span>
-					<label class="form-label" for="texta_clg_address">College Address</label>		
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-6 col-sm-6 col-md-12">
-					<div class="form-group form-group-lg">
-						<div class="inputWithIcon">	
-							<input type="text" id="text_arear" class="form-control form-control-input" >
-							<i class="glyphicon glyphicon-book"></i>
-							<span class="highlight"></span>
-							<label class="form-label" for="text_arear">No of Arear</label>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 col-md-12 col-sm-6">
-					<div class="form-group form-group-lg">
-						<div class="inputWithIcon">
-							<input type="text" id="text_last_yr_course" class="form-control form-control-input" >
-							<i class="glyphicon glyphicon-book"></i>
-							<span class="highlight"></span>
-							<label class="form-label" for="text_last_yr_course">LastYear Course</label>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="form-group form-group-lg">
-				<div class="inputWithIcon">
-					<input type="text" name="text_curre_yr_course" class="form-control form-control-input" >
-					<i class="glyphicon glyphicon-book"></i>
-					<span class="highlight"></span>
-					<label class="form-label" for="text_curre_yr_course">CurrentYear Course</label>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-3"></div>
-					<div class="col-lg-6 col-xs-12">
-						<label>Eligibility For scholarship:</label>
-						<div class="form-check form-check">
-							<input type="radio" name="form-check-input" id="elig_for_schol" name="eligi_for_schol">
-							<label class="form-check-label" for="elig_for_schol">Yes</label>
-						</div>
-						<div class="form-check form-check">
-							<input type="radio" name="form-check-input" id="elig_for_schol" name="eligi_for_schol">
-							<label class="form-check-label" for="elig_for_schol">no</label>
-						</div>
-					</div>
-					<div class="col-lg-3"></div>
-			</div>  						
-				<div class="row">
-					<div class="col-lg-3"></div>
-							<div class="col-lg-6 col-xs-12">
-								<label>Are you Going To Aten The Next Exam:</label>
-									<div class="form-check">
-									<input type="radio" name="form-check-input" id="elig_for_schol" name="eligi_for_schol">
-									<label class="form-check-label" for="elig_for_schol">Yes</label>
-								</div>
-								<div class="form-check form-check">
-									<input type="radio" name="form-check-input" id="elig_for_schol" name="eligi_for_schol">
-									<label class="form-check-label" for="elig_for_schol">no</label>
-								</div>
-						</div>
-						<div class="col-lg-3"></div>
-					</div>  
+	<head>
+		<title>Application Form</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="main.css">
+		<!--
+		naveen
+		-->
+		<script type="text/javascript">
 		
-								<div class="row">
-									<div class="col-lg-6 col-sm-6 col-md-12 col-xs-12">
-										<div class="form-group form-group-lg">
-											<div class="inputWithIcon">
-												<input type="text" id="hostel_chk_in_la_yr" name="date" onclick="(this.type='date')" class="form-control form-control-input" >
-												<span class="glyphicon glyphicon-calendar"></span>
-												<span class="highlight"></span>
-												<label for="hostel_chk_in_la_yr" class="form-label">Check last Year</label>
+		$(document).ready(function(){
+		$('.prev-slide').click(function(){
+		$('#carouselExampleControls').carousel('prev');
+		progress.attr("value","50");
+		progressMessage.text("the form it wants you");
+		});
+		$('.next-sliide').click(function(){
+		$('#carouselExampleControls').carousel('next');
+		});
+		
+		});
+		//$('#btn-nxt').click(function(){
+		//$('#carouselExampleControls').carousel('carousel-control-next');
+		//});
+		
+		</script>
+		<title>Welcome</title>
+	</head>
+	<body style="font-family: verdana;" class="parallax">
+		<div class="jumbotron header text-center">
+			<h1>This is Header.</h1>
+			<p>This is Sub-Header.</p>
+		</div>
+		<nav class="navbar bg-blue navbar-dark sticky-top" role="navigation">
+			<div class="container-fluid">
+				<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="navbar-header">
+					<p class="navbar-brand white">Menu</p>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav white">
+						<span class="line-br-white"></span>
+						<li class="nav-item"><a href="#" class="white nav-link menu">Apply Scholarship</a></li>
+						<span class="line-br-white"></span>
+						<li class="nav-item"><a href="#" class="white nav-link menu">Review Scholarship - (Staffs only)</a></li>
+						<span class="line-br-white-"></span>
+					</ul>
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="logout.php" class="white nav-link" style="text-decoration: none;">
+						Logout
+					</a></li>
+				</ul>
+			</div>
+		</nav>
+		<div class="">
+			<h1 class="text-center">Welcome!</h1>
+			<h3 class="text-center">Application Form comes here :)</h3>
+			<!-- Form style by Naveen  -->
+			
+			<div id="carouselExampleControls" class="carousel slide" data-interval="false" data-ride="carousel">
+				<ol class="carousel-indicators">
+					<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+					<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+					<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+				</ol>
+				
+				<div class="carousel-inner">
+					<div class="carousel-item active ">
+						<div class="container">
+							<div class=" form-container">
+								<br><br>
+								<form>
+									<div class="row">
+										<div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon">
+													<input type="text" name="reg_no" id="text_reg_no" class="form-control  form-control-sub" required>
+													<label for="text_reg_no" class="form-control-sub-placeholder">RegNo</label>
+													<i class="fa fa-id-card"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon">
+													<input type="text" name="stud_name" id="text_stud_name" class="form-control form-control-sub" required>
+													<label for="text_stud_name" class="form-control-sub-placeholder">Student Name</label>
+													<i class="fa fa-graduation-cap"></i>
+													<span class="highlight"></span>
+												</div>
 											</div>
 										</div>
 									</div>
-									<div class="col-lg-6  col-sm-6 col-md-12 col-xs-12">
-										<div class="form-group form-group-lg">
+									<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+										<div class="form-group">
 											<div class="inputWithIcon">
-												<input type="text" id="date_checkout" onclick="(this.type='date')" class="form-control form-control-input" >
-												<span class="glyphicon glyphicon-calendar"></span>
+												<input type="text" name="father_name" id="text_father_name" class="form-control form-control-sub" required>
+												<label for="text_father_name" class="form-control-sub-placeholder">Father Name</label>
+												<i class="glyphicon glyphicon-user"></i>
 												<span class="highlight"></span>
-												<label for="date_checkout" class="form-label">Check Last Year</label>
 											</div>
 										</div>
 									</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-6 col-sm-6 col-md-12 col-xs-12">
-									<div class="form-group form-group-lg">
-										<div class="inputWithIcon">
-											<input type="text" id="date_current" onclick="(this.type='date')" class="form-control form-control-input" >
-											<span class="glyphicon glyphicon-calendar"></span>
-											<span class="highlight"></span>
-											<label class="form-label" for="date_current">Check Current Year</label>
+									<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+										<div class="form-group">
+											<div class="inputWithIcon">
+												<input type="text" name="caste" id="text_caste" class="form-control form-control-sub" required>
+												<label for="text_caste" class="form-control-sub-placeholder">Caste</label>
+												<i class="fa fa-file-text-o"></i>
+												<span class="highlight"></span>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-lg-6 col-sm-6 col-md-12 col-xs-12">
-									<div class="form-group form-group-lg">
-										<div class="inputWithIcon">
-											<input type="text" id="date_aprrox" class="form-control form-control-input" onclick="(this.type='date')" >
-											<span class="glyphicon glyphicon-calendar"></span>
-											<span class="highlight"></span>
-											<label class="form-label" for="date_aprrox">Check Current Year</label>
+									<div class="row">
+										<div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon-select">
+													<select class="custom-select cust" name="dept" id="sel_dept">
+														<option disabled selected>Choose Dept</option>
+														<option value="1">Computer Sciense Engineering</option>
+														<option value="2">Civil</option>
+														<option value="3">Mechanical Engineering</option>
+														<option value="4">Polymer</option>
+														<option value="5">Plastic</option>
+														<option value="6">Electrical And Electronical Engineering</option>
+													</select>
+													<i class="fa fa-institution"></i>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon-select">
+													<select class="custom-select cust" name="class" id="sel_class">
+														<option disabled selected>Choose Class..</option>
+														<option value="1">BC</option>
+														<option value="2">MBC</option>
+														<option value="3">AC</option>
+														<option value="4">DC/BC</option>
+													</select>
+													<i class="fa fa-group"></i>
+												</div>
+											</div>
 										</div>
 									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-6 col-sm-6 col-md-12 col-xs-12">
-									<div class="form-group form-group-lg">
-										<div class="inputWithIcon">
-											<input type="text" name="text_cand_behav_impr" id="text_cand_behav_impr" class="form-control form-control-input" >
-											<span class="glyphicon glyphicon-money"></span>
-											<span class="highlight"></span>
-											<label class="form-label" for="text_cand_behav_impr">PrevYear Amonunt</label>
+									<div class="row">
+										<div class="col-lg-12 col-sm-12 col-md-12 col-lg-12">
+											<div class="form-group">
+												<div class="inputWithIcon-text">
+													<textarea class="form-control form-control-sub text-icon" name="clg_address" rows="5" id="texta_clg_address" type="text" required></textarea>
+													<label for="texta_clg_address" class="form-control-sub-placeholder">College Address</label>
+													<i class="fa fa-pencil-square-o"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
 										</div>
 									</div>
-								</div>
-
-								<div class="col-lg-6 col-sm-6 col-md-12 col-xs-12">
-									<div class="form-group form-group-lg">
-										<div class="inputWithIcon">
-											<input type="text" name="text_cand_prev_yr_atted" id="text_cand_prev_yr_atted" class="form-control form-control-input" >
-											<span class="glyphicon glyphicon-money"></span>
-											<span class="highlight"></span>
-											<label class="form-label" for="text_cand_prev_yr_atted">PrevYear Atted</label>
+									<div class="row">
+										<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon">
+													<input type="text" name="no_of_arrear" id="text_no_of_arrear" class="form-control form-control-sub" required>
+													<label for="text_no_of_arrear" class="form-control-sub-placeholder">No Of Arrear</label>
+													<i class="fa fa-folder-open"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
 										</div>
 									</div>
-								</div>
-
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-group form-group-lg">
-										<div class="inputWithIcon">
-											<textarea type="text" id="texta_current_address" class="form-control form-control-texta" rows="5" ></textarea>
-											<span class="glyphicon glyphicon-envelope"></span>
-											<span class="highlight"></span>
-											<label class="form-label" for="texta_current_address">Current Address</label>
-										</div>
+									<div class="form-group">
+										<button type="submit" name="" class="btn btn-submit water-drop btn-lg next-sliide" data-toggle="tooltip" data-placement="top" title="Scholarship Form Apply From Another Form!">Next<i class="glyphicon glyphicon-log-in"></i></button>
 									</div>
-								</div>
+								</form>
 							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-group form-group-lg">
-										<div class="inputWithIcon">
-											<textarea class="form-control form-control-texta" type="text" id="texta_permanent_address" rows="5" ></textarea>
-											<span class="glyphicon glyphicon-envelope"></span>
-											<span class="highlight"></span>
-											<label class="form-label" for="texta_permanent_address">Permanent Address</label>
-										</div>	
-									</div>
-								</div>
-							</div>		
-							<div class="row">
-								<div class="col-lg-12">	
-									<div class="form-group form-group-lg">
-										<div class="inputWithIcon">
-											<input type="text" name="text_prev_year_amt" class="form-control form-control-input" >
-											<span class="glyphicon glyphicon-share-alt"></span>
-											<span class="highlight"></span>
-											<label class="form-label" for="text_prev_year_amt">Prev Year Amount</label>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group-lg">
-								<a href="upload_docs.php"><button type="button" class="btn btn-primary btn-lg">Upload Documents</button></a>
-							</div>
-
-							<div class="form-group">
-								 <button type="submit" class="btn-submit water-drop">Submit</button>
-							</div>
-							
-						</form>
+						</div>
+						<br>
 					</div>
-
-
-		<!-- End of form style Naveen  -->
-  	</div>
-
-    <footer>
-    	<div class="footer white">
-	      <div class="row">
-	        <div class="col-sm white">
-	          <p><a href="#">Home</a></p>
-	          <p><a href="#">About</a></p>
-	          <p><a href="#">Contact Us</a></p>
-	        </div>
-	        <div class="col-sm white">
-	          <p><a href="#">Terms and Conditions</a></p>
-	          <p><a href="#">Privacy Policy</a></p>
-	        </div>
-	      </div>
-	      <p class="text-center">Copyright &copy <script>document.write(new Date().getFullYear())</script> - EpicSoftwares.</p>
-	  </div>
-    </footer>
-    
-  </div>
-</body>
+					<div class="carousel-item">
+						<div class="container">
+							<div class="form-container">
+								<br><br>
+								<form>
+									<div class="row">
+										<div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon">
+													<input type="text" name="prev_yr_scholar_amt" class="form-control form-control-sub" id="text_prev_yr_amt" required>
+													<label for="text_prev_yr_amt" class="form-control-sub-placeholder">Pre Year Amount</label>
+													<i class="fa fa-dollar"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
+										</div>
+										<!--  <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon">
+													<input type="text" name="cand_prev_yr_atted" id="text_prev_yr_atted" class="form-control form-control-sub" required>
+													<label for="text_prev_yr_atted" class="form-control-sub-placeholder">PreYear</label>
+													<i class="fa fa-bar-chart"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
+										</div>-->
+										<div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon">
+													<input type="text" name="cu_yr_course" id="text_cu_yr_course" class=" form-control form-control-sub" required>
+													<label for="text_cu_yr_course" class="form-control-sub-placeholder">Current Year Course</label>
+													<i class="fa fa-book"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon-text">
+													<textarea type="text" name="perm_address" id="texta_perm_address" rows="5" class="form-control form-control-sub text-icon"required></textarea>
+													<label for="texta_perm_address" class="form-control-sub-placeholder">Permanent Address</label>
+													<i class="fa fa-envelope"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon">
+													<input type="text" name="la_yr_course" id="text_la_yr_course" class="form-control form-control-sub" required>
+													<label for="text_la_yr_course" class="form-control-sub-placeholder">LastYearCourse</label>
+													<i class="fa fa-mortar-board"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-1"></div>
+										<div class="col-lg-10">
+											<label name="elig_for_scholar" id="redio_eligi_schl">Eligibility For Scholarship:</label>
+											<div class="custom-control custom-radio">
+												<input type="radio" name="radios_eligi_schl" class="custom-control-input" id="radio-eligi-yes">
+												<label class="custom-control-label" for="radio-eligi-yes">YES</label>
+											</div>
+											<div class="custom-control custom-radio">
+												<input type="radio" class="custom-control-input" name="radios_eligi_schl" id="radio-eligi-no">
+												<label class="custom-control-label" for="radio-eligi-no">NO</label>
+											</div>
+										</div>
+										<div class="col-lg-1"></div>
+									</div>
+									<div class="row">
+										<div class="col-lg-1"></div>
+										<div class="col-lg-10">
+											<label name="elig_for_next_exam" id="redio_next_exam">Is He Going To Atten The Next Exam:</label>
+											<div class="custom-control custom-radio">
+												<input type="radio" class="custom-control-input" name="radios_next_ex" id="radio-ex-yes">
+												<label class="custom-control-label" for="radio-ex-yes">YES</label>
+											</div>
+											<div class="custom-control custom-radio">
+												<input type="radio" class="custom-control-input" name="radios_next_ex" id="radio-ex-no">
+												<label class="custom-control-label" for="radio-ex-no">YES</label>
+											</div>
+										</div>
+										<div class="col-lg-1"></div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="form-group">
+												<button type="submit" name="" class=" btn-submit water-drop prev-slide" data-toggle="tooltip" data-placement="top" title="To Have Any Changes Click Next!"><i class="fa fa-mail-reply-all">Back</i></button>
+											</div>
+										</div>
+										<div class="col-lg-6">
+											<div class="form-group">
+												<button type="submit" name="" class=" btn-lg btn-submit water-drop next-sliide" data-toggle="tooltip" data-placement="top" title="Apply From Another Form!"><i class="glyphicon glyphicon-send"></i>Next</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<br>
+					</div>
+					<div class="carousel-item">
+						<div class="container">
+							<div class="form-container">
+								<br>
+								<form>
+									<div class="row">
+										<div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon">
+													<input type="text" id="date_chk_in_la_yr" onclick="(this.type='date')" onblur="(this.type='text')" class="form-control form-control-sub text-date" name="hostel_chk_in_la_yr" required>
+													<label for="date_chk_in_la_yr" class="form-control-sub-placeholder">Check Lastin Year</label>
+													<i class="fa fa-calendar"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon">
+													<input type="text" id="date_chk_out_la_yr" onclick="(this.type='date')" onblur="(this.type='text')" class="form-control form-control-sub text-date" name="hostel_chk_out_la_yr" required>
+													<label for="date_chk_out_la_yr" class="form-control-sub-placeholder">Checkout Last Year</label>
+													<i class="fa fa-calendar-o"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon">
+													<input type="text" id="date_chk_in_cu_yr" onclick="(this.type='date')" onblur="(this.type='text')" class="form-control form-control-sub text-date" name="hostel_chk_in_cu_yr" required>
+													<label for="date_chk_in_cu_yr" class="form-control-sub-placeholder">CheckinCurrentYear</label>
+													<i class="fa fa-calendar-plus-o"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon inputWithIcon-date">
+													<input type="text" id="date_chk_out_cu_yr" class="form-control form-control-sub text-date " onclick="(this.type='date')" onblur="(this.type='text')" name="hostel_chk_out_cu_yr" required>
+													<label for="date_chk_out_cu_yr" class="form-control-sub-placeholder">CheckCurrentYear</label>
+													<i class="fa fa-calendar-times-o"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon-text">
+													<textarea type="text" id="texta_cu_address" class="form-control form-control-sub text-icon" rows="5" name="temp_address" required></textarea>
+													<label for="texta_cu_address" class="form-control-sub-placeholder">CurrentAddress</label>
+													<i class="fa fa-envelope-o"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+											<div class="form-group">
+												<div class="inputWithIcon">
+													<input type="text" name="cand_email_address" id="text_email_address" class="form-control form-control-sub" required>
+													<label for="text_prev_yr_impr" class="form-control-sub-placeholder">Email Address</label>
+													<i class=" fa fa-send-o"></i>
+													<span class="highlight"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="form-group">
+												<button type="submit" name="" class="btn-submit water-drop prev-slide" data-toggle="tooltip" data-placement="top" title="Any Changes To Click Back!"><i class="fa fa-mail-reply-all">Back</i></button>
+											</div>
+										</div>
+										<div class="col-lg-6">
+											<div class="form-group">
+												<button type="submit" name="" class="btn-submit water-drop next-sliide" data-toggle="tooltip"data-placement="top" title="Scholarship Form Apply!"><i class="fa fa-rocket">Submit</i></button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<br>
+					</div>
+					<br>
+				</div>
+				<a class="carousel-control-prev" href="#carouselExampleControls" hidden="hidden" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				
+				<a class="carousel-control-next" hidden="hidden" href="#carouselExampleControls" id="next" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+				<!-- End of form style Naveen  -->
+			</div>
+			<footer>
+				<div class="footer white">
+					<div class="row">
+						<div class="col-sm white">
+							<p><a href="#">Home</a></p>
+							<p><a href="#">About</a></p>
+							<p><a href="#">Contact Us</a></p>
+						</div>
+						<div class="col-sm white">
+							<p><a href="#">Terms and Conditions</a></p>
+							<p><a href="#">Privacy Policy</a></p>
+						</div>
+					</div>
+					<p class="text-center">Copyright &copy <script>document.write(new Date().getFullYear())</script> - EpicSoftwares.</p>
+				</div>
+			</footer>
+			
+		</div>
+	</body>
 </html>

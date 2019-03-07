@@ -49,6 +49,7 @@
 				$("#cand-behav-impr").html(response['cand_behav_impr']);
 				$("#cand-prev-yr-attend").html((response['cand_prev_yr_attend'] == 0) ? "Not Updated" : response['cand_prev_yr_attend']);
 
+				fetchUploads();
 			}
 
 			var req = $.ajax({
@@ -71,12 +72,34 @@
 			});
 
 			function acceptApplication() {
-				// alert("Application is being processed");
-				var val = $('form').serialize();
+				alert("Application is being processed");
+				var application_id = "<?= $_GET['app_id'] ?>";
+				var valid_code = 1;
+
+				// alert('<?= $_SESSION['staff_level'] ?>');
+				// alert('<?= $_SESSION['login_staff'] ?>');
 
 				req =  $.ajax({
-					url: "database/",
+					url: "database/validate_application.php",
 					type: "POST",
+					data: {
+						'application_id':application_id,
+						'valid_code':valid_code,
+						'staff_level': '<?= $_SESSION['staff_level'] ?>',
+						'staff':'<?= $_SESSION['login_staff'] ?>'
+					},
+					dataType: 'json'
+				});
+
+				req.done(function (response, textStatus) {
+					alert(response['msg']);
+					// for ( var key in response )
+					// 	alert(response[key]);
+
+				});
+
+				req.error(function (error, msg) {
+					alert(error + ": " + msg);
 				});
 			}
 
@@ -93,9 +116,80 @@
 			});
 
 			function rejectApplication(application_id) {
-				alert("Application has been Rejected");
-				window.location = "staff_index_lvl0.php";
+				// alert("Application has been Rejected");
+				// window.location = "staff_index_lvl0.php";
 			}
+
+			$('#form-reject-modal').submit(function (evt) {
+				evt.preventDefault();
+		
+				alert("Application is being rejected");
+				var application_id = "<?= $_GET['app_id'] ?>";
+				var valid_code = 2;
+				var rejection_msg = $('#reject-reason-msg').val();
+
+				// alert('<?= $_SESSION['staff_level'] ?>');
+				// alert('<?= $_SESSION['login_staff'] ?>');
+
+				req =  $.ajax({
+					url: "database/validate_application.php",
+					type: "POST",
+					data: {
+						'application_id':application_id,
+						'valid_code':valid_code,
+						'staff_level': '<?= $_SESSION['staff_level'] ?>',
+						'staff':'<?= $_SESSION['login_staff'] ?>',
+						'rejection_msg':rejection_msg
+					}
+					// dataType: 'json'
+				});
+
+				req.done(function (response, textStatus) {
+					// alert(response['msg']);
+					alert(response);
+					// for ( var key in response )
+					// 	alert(response[key]);
+				
+				});
+
+				req.error(function (error, msg) {
+					alert(error + ": " + msg);
+				});
+			});
+
+			function fetchUploads() {
+				$('#loading').css('display', '');
+				var application_id = "<?= $_GET['app_id'] ?>";
+
+				var req = $.ajax({
+					url: 'database/get_uploads.php',
+					type: 'POST',
+					data: {
+						'appid': application_id
+					},
+					dataType: 'json'
+				});
+
+				req.done(function (response, textStatus) {
+					// alert(response);
+
+					$('#img-grid').empty();
+
+					for ( var key in response['files'] ) {
+
+						$('#img-grid').append('<div class="col-3 m-3 mx-auto"><div class="card border border-primary shadow p-3 mb-5 bg-white rounded" style="width: 18rem;"><div class="card-body bg-light"><img class="card-img" src="' + response['files'][key] + '" data-toggle="modal" data-target="#preview-img"><p class="card-text text-secondary text-center">' + key + '</p></div></div></div>');
+					}
+
+					$('#loading').css('display', 'none');
+
+				});
+			}
+
+			$('#preview-img').on('show.bs.modal', function (evt) {
+				var img = $(evt.relatedTarget);
+				$(this).find('#imgpreview').attr('src', img.attr('src'));
+			})
+
 
 			acceptApplication_js = acceptApplication;
 			rejectApplication_js = rejectApplication;
@@ -296,6 +390,25 @@
 					<p id="cand-prev-yr-attend"></p>
 				</div>
 			</div>
+		      <div class="load-wrap text-center" style="display: none;" id="loading">
+		          <div class="load-3">
+		            <div class="line"></div>
+		            <div class="line"></div>
+		            <div class="line"></div>
+		          </div>  
+		          <p>Loading Documents...</p>
+		      </div>
+			<div class="row p-3 m-3" id="img-grid">
+				<div class="col-6">
+					<div class="card" style="width: 18rem;">
+						<div class="card-body">
+							<img class="card-img" src="baby groot.jpg" data-toggle="modal" data-target="#preview-img">
+							<p class="card-text text-secondary">Some Text</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<h4 class="text-center text-dark">Click on image to magnify<i class="fa fa-search"></i></h4>
 			<div class="row">
 				<div class="col-md-5 form-group">
 					<button class="btn-norm water-drop" onclick="acceptApplication_js()">Accept</button>
@@ -307,6 +420,19 @@
 				</div>
 			</div>
 		</form>
+		</div>
+		<div class="modal fade" id="preview-img" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="document" >
+				<div class="modal-content" style="background-color: transparent; border: none;">
+					<!-- <div class="modal-header">
+						<h5 class="modal-title">Image preview</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					</div> -->
+					<div class="modal-body text-center">
+						<img src="" id="imgpreview" style="width: 50vw; height: 90vh;">
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="modal fade" id="reject-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">

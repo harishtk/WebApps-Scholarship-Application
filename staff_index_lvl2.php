@@ -125,7 +125,7 @@
           </ul>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="logout.php" class="white nav-link" style="text-decoration: none;"><i class="glyphicon glyphicon-user"></i>logout</a></li>
+          <li><a href="logout.php" class="white nav-link" style="text-decoration: none;"><i class="fa fa-sign-out"></i>logout</a></li>
         </ul>
       </div>
     </nav> 

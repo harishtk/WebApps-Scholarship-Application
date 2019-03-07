@@ -54,7 +54,7 @@ CREATE TABLE `application` (
 
 LOCK TABLES `application` WRITE;
 /*!40000 ALTER TABLE `application` DISABLE KEYS */;
-INSERT INTO `application` VALUES ('DCE174202','Haris Kumar T K','Kubendran T S','Tirupparankunram Rd, Jaihindpuram, Madurai, Tamil Nadu 625011','Computer Science Engineering','Computer Science Engineering',0,1,1,'Computer Science Engineering','Sourastra','BC','Plot 4, Pethanachi Amman St, Thulasi Ram Main St, Villapuram, Madurai - 12','Plot 4, Pethanachi Amman St, Thulasi Ram Main St, Villapuram, Madurai - 12','0','-','-','-','-','-',0);
+INSERT INTO `application` VALUES ('DCE174202','Haris Kumar T K','Kubendran T S','Tirupparankunram Rd, Jaihindpuram, Madurai, Tamil Nadu 625011','Computer Science Engineering','Computer Science Engineering',0,1,1,'Computer Science Engineering','Sourastra','BC','Plot 4, Pethanachi Amman St, Thulasi Ram Main St, Villapuram, Madurai - 12','Plot 4, Pethanachi Amman St, Thulasi Ram Main St, Villapuram, Madurai - 12','0','-','-','-','-','Good',98);
 /*!40000 ALTER TABLE `application` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,6 +81,29 @@ LOCK TABLES `application_avail` WRITE;
 /*!40000 ALTER TABLE `application_avail` DISABLE KEYS */;
 INSERT INTO `application_avail` VALUES ('DCE174202','174202','2019-02-12 17:34:38');
 /*!40000 ALTER TABLE `application_avail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rejection_list`
+--
+
+DROP TABLE IF EXISTS `rejection_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rejection_list` (
+  `application_id` varchar(10) NOT NULL,
+  `rejection_msg` varchar(512) DEFAULT 'Not available, Please contact admin.',
+  `rejected_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rejection_list`
+--
+
+LOCK TABLES `rejection_list` WRITE;
+/*!40000 ALTER TABLE `rejection_list` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rejection_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -126,7 +149,7 @@ CREATE TABLE `stud_auth` (
 
 LOCK TABLES `stud_auth` WRITE;
 /*!40000 ALTER TABLE `stud_auth` DISABLE KEYS */;
-INSERT INTO `stud_auth` VALUES ('174202','welcome123');
+INSERT INTO `stud_auth` VALUES ('174202','welcome123'),('164129','welcome123');
 /*!40000 ALTER TABLE `stud_auth` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,8 +177,32 @@ CREATE TABLE `stud_info` (
 
 LOCK TABLES `stud_info` WRITE;
 /*!40000 ALTER TABLE `stud_info` DISABLE KEYS */;
-INSERT INTO `stud_info` VALUES ('174202','Haris Kumar T K','1999-09-05','Computer Engineering','2017-19','B+ve');
+INSERT INTO `stud_info` VALUES ('164129','Naveen Kumar P','2000-04-16','Computer Enginerring','2016-19','B+ve'),('174202','Haris Kumar T K','1999-09-05','Computer Engineering','2017-19','B+ve');
 /*!40000 ALTER TABLE `stud_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `uploads_map`
+--
+
+DROP TABLE IF EXISTS `uploads_map`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `uploads_map` (
+  `reg_no` varchar(6) DEFAULT NULL,
+  `application_id` varchar(10) DEFAULT NULL,
+  `upload_dir` varchar(64) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `uploads_map`
+--
+
+LOCK TABLES `uploads_map` WRITE;
+/*!40000 ALTER TABLE `uploads_map` DISABLE KEYS */;
+INSERT INTO `uploads_map` VALUES ('174202','DCE174202','uploads/174202');
+/*!40000 ALTER TABLE `uploads_map` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -192,4 +239,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-20 11:13:59
+-- Dump completed on 2019-03-07 11:44:14

@@ -463,6 +463,35 @@
 			
 		}
 
+		
+		function get_uploads_for($application_id) {
+			
+			$return = null;
+			
+			if ( $stmt = $this->db_con->prepare("SELECT * FROM uploads_map NATURAL JOIN application_avail WHERE application_avail.reg_no = uploads_map.reg_no AND application_avail.application_id = ?") ) {
+				
+				$stmt->bind_param("s", $application_id);
+				
+				$stmt->execute();
+				
+				$res = $stmt->get_result();
+				
+				if ( $res->num_rows == 1 ) {
+					$data = $res->fetch_assoc();
+					$return['reg_no'] = $data['reg_no'];
+					$return['application_id'] = $data['application_id'];
+					$return['link'] = $data['upload_dir'];
+				}
+				
+				$stmt->free_result();
+				
+				$stmt->close();
+				
+			}
+			
+			return json_encode($return);
+		}
+	
 	    /**
 	     * Destroys the connection object as soon as there is no reference.
 	     */
