@@ -95,7 +95,8 @@
 					alert(response['msg']);
 					// for ( var key in response )
 					// 	alert(response[key]);
-
+					
+					gotoURL('staff_index_lvl0.php');
 				});
 
 				req.error(function (error, msg) {
@@ -149,7 +150,7 @@
 					alert(response);
 					// for ( var key in response )
 					// 	alert(response[key]);
-				
+					gotoURL('staff_index_lvl0.php');
 				});
 
 				req.error(function (error, msg) {
@@ -188,12 +189,16 @@
 			$('#preview-img').on('show.bs.modal', function (evt) {
 				var img = $(evt.relatedTarget);
 				$(this).find('#imgpreview').attr('src', img.attr('src'));
-			})
+			});
 
 
 			acceptApplication_js = acceptApplication;
 			rejectApplication_js = rejectApplication;
 		});
+
+		function gotoURL(url) {
+			window.location(url);
+		}
 		</script>
 	</head>
 	<body class="parallax">
@@ -439,23 +444,23 @@
 				<div class="modal-content">
 					 <div class="modal-header">
 					 	<h5 class="modal-title" id="exampleModalLabel">New Message</h5>
-					 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
 					 </div>
 					 <div class="modal-body">
 					 	<form id="form-reject-modal">
 					 		<div class="form-group">
-					 			<label for="appilcation-id" class="col-form-label">Application Id:</label>
+					 			<label for="appilcation-id" class="col-form-label"><i class="fa fa-file-text-o"></i>Application Id:</label>
 					 			<input type="text" class="form-control" id="appilcation-id" name="appilcation-id" readonly>
 					 		</div>
 					 		<div class="form-group">
-					 			<label for="reject-reason-msg" class="col-form-label">Rejection Message: <small class="text-muted"> *Optional but Recommended</small></label>
+					 			<label for="reject-reason-msg" class="col-form-label"><i class="fa fa-pencil-square-o"></i>Rejection Message: <small class="text-muted"> *Optional but Recommended</small></label>
 					 			<textarea class="form-control" id="reject-reason-msg" name="reject-reason-msg" placeholder="Eg. _____ document is not valid"></textarea>
 					 		</div>
 					 	</form>
 					 </div>
 					 <div class="modal-footer">
 					 	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					 	<button type="button" class="btn btn-primary" data-dismiss="modal">Reject Application</button>
+					 	<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i>Reject Application</button>
 					 </div>
 				</div>
 			</div>	

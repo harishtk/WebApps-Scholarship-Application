@@ -48,6 +48,8 @@
 				$("#hostel-chk-out-cu-year").html(response['hostel_chk_out_cu_yr']);
 				$("#cand-behav-impr").html(response['cand_behav_impr']);
 				$("#cand-prev-yr-attend").html(response['cand_prev_yr_attend'] == 0 ? "Not Updated" : response['cand_prev_yr_attend']);
+
+				fetchUploads();
 			}
 
 			var req = $.ajax({
@@ -93,7 +95,7 @@
 					alert(response['msg']);
 					// for ( var key in response )
 					// 	alert(response[key]);
-
+					gotoURL('staff_index_lvl2.php');
 				});
 
 				req.error(function (error, msg) {
@@ -176,7 +178,7 @@
 					alert(response);
 					// for ( var key in response )
 					// 	alert(response[key]);
-				
+					gotoURL('staff_index_lvl2.php');
 				});
 
 				req.error(function (error, msg) {
@@ -184,9 +186,46 @@
 				});
 			});
 
+			function fetchUploads() {
+				$('#loading').css('display', '');
+				var application_id = "<?= $_GET['app_id'] ?>";
+
+				var req = $.ajax({
+					url: 'database/get_uploads.php',
+					type: 'POST',
+					data: {
+						'appid': application_id
+					},
+					dataType: 'json'
+				});
+
+				req.done(function (response, textStatus) {
+					// alert(response);
+
+					$('#img-grid').empty();
+
+					for ( var key in response['files'] ) {
+
+						$('#img-grid').append('<div class="col-3 m-3 mx-auto"><div class="card border border-primary shadow p-3 mb-5 bg-white rounded" style="width: 18rem;"><div class="card-body bg-light"><img class="card-img" src="' + response['files'][key] + '" data-toggle="modal" data-target="#preview-img"><p class="card-text text-secondary text-center">' + key + '</p></div></div></div>');
+					}
+
+					$('#loading').css('display', 'none');
+
+				});
+			}
+
+			$('#preview-img').on('show.bs.modal', function (evt) {
+				var img = $(evt.relatedTarget);
+				$(this).find('#imgpreview').attr('src', img.attr('src'));
+			});
+
 			acceptApplication_js = acceptApplication;
 			rejectApplication_js = rejectApplication;
 		});
+
+		function gotoURL(url) {
+			window.location(url);
+		}
 		</script>
 	</head>
 	<body class="parallax">
@@ -381,6 +420,25 @@
 					<p id="cand-prev-yr-attend"></p>
 				</div>
 			</div>
+			<div class="load-wrap text-center" style="display: none;" id="loading">
+		          <div class="load-3">
+		            <div class="line"></div>
+		            <div class="line"></div>
+		            <div class="line"></div>
+		          </div>  
+		          <p>Loading Documents...</p>
+		      </div>
+			<div class="row p-3 m-3" id="img-grid">
+				<div class="col-6">
+					<div class="card" style="width: 18rem;">
+						<div class="card-body">
+							<img class="card-img" src="baby groot.jpg" data-toggle="modal" data-target="#preview-img">
+							<p class="card-text text-secondary">Some Text</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<h4 class="text-center text-dark">Click on image to magnify<i class="fa fa-search"></i></h4>
 			<div class="row">
 				<div class="col-md-5 form-group">
 					<button class="btn-norm water-drop" onclick="acceptApplication_js()">Accept</button>

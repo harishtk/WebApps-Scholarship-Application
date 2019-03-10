@@ -207,10 +207,45 @@
 			} else {
 				$data['application_available'] = false;
 			}
+			
+			$data['password_changed'] = $this->is_password_changed($username, $data['dob']);
 
 			return json_encode($data);
 		}
 		
+		public function is_password_changed($username, $passwd) {
+			
+			$return = 0;
+			
+			if ( $stmt = $this->db_con->prepare("SELECT * FROM stud_auth WHERE username=?") ) {
+				
+				$stmt->bind_param("s", $username);
+				
+				$stmt->execute();
+				
+				$res = $stmt->get_result();
+				
+				while($row = $res->fetch_assoc()) 
+					(strcmp($row['passwd'], $passwd) == 0 ) ? $return = 0 : $return = 1;
+				
+				$stmt->free_result();
+				
+				$stmt->close();
+			}
+			
+			return $return;
+		}
+		
+		/**
+		* Gets the rejection message for given
+		* @param string $application_id
+		* 
+		* @return json $data {
+			* 'application_id': string,
+			* 'rejection_msg' : string,
+			* 'rejected_on' : string
+		}
+		*/
 		public function get_reject_msg_for($application_id) {
 			$data = null;
 			
@@ -348,7 +383,7 @@
 		*/
 		function is_application_rejected($application_id) {
 
-			$data['is_rejected'] = true;
+			$data['is_rejected'] = 1;
 
 			if ( $stmt = $this->db_con->prepare("SELECT * FROM validation WHERE application_id = ? AND lvl_0 = 2 OR lvl_1 = 2 OR lvl_2 = 2") ) {
 
@@ -364,7 +399,7 @@
 				$res = $stmt->get_result();
 
 				if ( $res->num_rows <= 0 )
-					$data['is_rejected'] = false;
+					$data['is_rejected'] = 0;
 
 				$stmt->free_result();
 
@@ -492,6 +527,30 @@
 			return json_encode($return);
 		}
 	
+		function update_passwd($username, $passwd) {
+			
+			$return = 0;
+			
+			if ( $stmt = $this->db_con->prepare("UPDATE stud_auth set passwd=? WHERE username=?") ) {
+				
+				$stmt->bind_param("ss", $passwd, $username);
+				
+				$stmt->execute();
+				
+				$res = $stmt->get_result();
+				
+				if ( $res ) 
+					$return = 1;
+					
+				$stmt->free_result();
+				
+				$stmt->close(); 
+								
+			}
+			
+			return $return;
+		}
+		
 	    /**
 	     * Destroys the connection object as soon as there is no reference.
 	     */

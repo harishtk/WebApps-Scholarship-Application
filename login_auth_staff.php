@@ -1,6 +1,7 @@
 <?php
 
 	include('database/db_config.php');
+	include('logs.php');
 	session_start();
 
 	$error = "";
@@ -31,6 +32,8 @@
 		$_SESSION['staff_level'] = $res['level'];
 		$lvl = $res['level'];
 		
+		Logs::event($username=$username, $msg="Successfully Logged in");
+
 		if ( $lvl == 0 )
 			header("location: staff_index_lvl0.php");
 		else if ( $lvl == 1 )
@@ -40,6 +43,7 @@
 
 	} else {
 		$error = err."Username or Password Invalid :(";
+		Logs::event($username=$username, $msg="Login Attempt");
 	}
 
 	if ( $error != "" ) {

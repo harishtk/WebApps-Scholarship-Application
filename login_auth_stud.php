@@ -1,6 +1,8 @@
 <?php
 
 	include('database/db_config.php');
+	include('logs.php');
+
 	session_start();
 
 	$error = "";
@@ -28,11 +30,12 @@
 	if ( $res ) {
 
 		$_SESSION['login_stud'] = $username;
-
+		Logs::event($username=$username, $msg="Successfully Logged in");
 		header("location: index.php");
 
 	} else {
 		$error = err."Username or Password Invalid :(";
+		Logs::event($username=$username, $msg="Login Attempt");
 	}
 
 	if ( $error != "" )

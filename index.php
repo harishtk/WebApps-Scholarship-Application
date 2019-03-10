@@ -59,12 +59,17 @@
 
             $('#nav-apply').css("display", "none");
 
-            if ( response['is_rejected'] == true ) {
+            if ( response['is_rejected'] == 1 ) {
               $('#applicaiton-rejected').css("display", "");
               $('#nav').css("display", "none");
+              $('#msg-trigger').attr('data-appid', response['application_id']);
             }
 
-          } 
+          }
+
+          if ( response['password_changed'] == 0 ) {
+            goTo('change_password.php');
+          }
         }
         
         $('#loading').css('display', 'none');
@@ -81,9 +86,9 @@
       });
 
       $('#modal-reject-msg').on('show.bs.modal', function (evt) {
-        // var app_id = $(evt.relatedTarget).data('appid');
+        var app_id = $(evt.relatedTarget).data('appid');
 
-        $(this).find('#modal-title').text("Application Id: " + "eg");
+        $(this).find('#modal-title').text("Application Id: " + app_id);
       });
 
     });
@@ -278,7 +283,7 @@
       <div class="row justify-content-center text-center" id="applicaiton-rejected" style="display: none;">
       <div class="col-sm">
         <button class="btn-big water-drop" aria-describedby="#reject-msg" disabled>Application Rejected!</button>
-        <small id="reject-msg"><a href="#" data-toggle="modal" data-target="#modal-reject-msg" data-appid="example" class="text-danger bolder">Tell Me What Happened</a></small>
+        <small id="reject-msg"><a href="#" id="msg-trigger" data-toggle="modal" data-target="#modal-reject-msg" data-appid="example" class="text-danger bolder" style="text-decoration: none">Tell Me What Happened</a></small>
       </div>
     </div>
     </div>

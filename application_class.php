@@ -23,6 +23,7 @@
 		private $hostel_chk_out_la_yr;
 		private $hostel_chk_in_cu_yr;
 		private $hostel_chk_out_cu_yr;
+		private $email;
 
 	}
 ?>

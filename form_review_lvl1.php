@@ -95,7 +95,7 @@
 					alert(response['msg']);
 					// for ( var key in response )
 					// 	alert(response[key]);
-
+					gotoURL('staff_index_lvl1.php');
 				});
 
 				req.error(function (error, msg) {
@@ -180,7 +180,7 @@
 					alert(response);
 					// for ( var key in response )
 					// 	alert(response[key]);
-				
+					gotoURL('staff_index_lvl1.php');
 				});
 
 				req.error(function (error, msg) {
@@ -191,6 +191,10 @@
 			acceptApplication_js = acceptApplication;
 			rejectApplication_js = rejectApplication;
 		});
+
+		function gotoURL(url) {
+			window.location(url);
+		}
 
 		// function updateConductCert_js() {
 		// 	alert("Data Updated!");
