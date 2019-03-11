@@ -791,7 +791,7 @@ label:focus,
   font-size: 85%;
   padding: 10px;
   opacity: 1;
-  color: red;
+  color:black;
 }
 
 .form-control-sub {
@@ -816,7 +816,7 @@ label:focus,
     font-size: 20px;
   }
    input[type=text]:focus ~ i{
-    color:blue;
+    color:darkgrey;
   }
   /* select option*/
   .cust{
@@ -851,7 +851,7 @@ label:focus,
     font-size: 22px;
   }
   textarea[type="text"]:focus ~ i{
-    color:blue;
+    color:darkgrey;
   }
 /* date allignment*/
 
@@ -859,7 +859,7 @@ label:focus,
   padding-left: 40px;
  }
  .text-date:focus ~ i{
-  color: blue;
+  color:darkgrey;
  }
 
  /* not important*/
@@ -897,124 +897,4 @@ label:focus,
   to { width: 0; background: transparent; }
  }
 
- /*Naveen Form Styles*/
- .form-control-sub-placeholder {
-  position: absolute;
-  top: 0;
-  padding: 12px 0 0 40px;
-  transition: all 200ms;
-  opacity: 0.5;
-  font-weight: bold;
-}
-
-.form-control-sub:focus + .form-control-sub-placeholder,
-.form-control-sub:valid + .form-control-sub-placeholder {
-  transform: translate3d(10%, -125%,0);
-  font-size: 85%;
-  padding: 10px;
-  opacity: 1;
-  color: red;
-}
-
-.form-control-sub {
-  padding: 1.5rem;
-  margin: auto;
-}
-/*  naveen glyphicon*/
-  .inputWithIcon input[type="text"]{
-    padding-left: 40px;
-
-  }
-  .inputWithIcon{
-    position: relative;
-    
-  }
-  .inputWithIcon i{
-    position: absolute;
-    top:5px;
-    left: 0px;
-    padding:10px 10px;
-    color:black;    
-    font-size: 20px;
-  }
-   input[type=text]:focus ~ i{
-    color:blue;
-  }
-  /* select option*/
-  .cust{
-    padding: 1px 0 3px 35px;
-    font-size:;
-  }
-  .inputWithIcon-select{
-    position: relative;
-  }
-  .inputWithIcon-select i{
-    position: absolute;
-    top: 10px;
-    left: 0px;
-    color: black;
-    font-size: 18px;
-  }
-  select:focus ~ i{
-    color: red;
-  }
-  /* textarea*/
-  .text-icon{
-    padding-left: 40px;
-  }
-  .inputWithIcon-text{
-    position: relative;
-  }
-  .inputWithIcon-text i{
-    position: absolute;
-    top: 10px;
-    left: 2px;
-    color: black;
-    font-size: 22px;
-  }
-  textarea[type="text"]:focus ~ i{
-    color:blue;
-  }
-/* date allignment*/
-
- .text-date:focus{
-  padding-left: 40px;
- }
- .text-date:focus ~ i{
-  color: blue;
- }
-
- /* not important*/
- /*input[type='date']{
-  padding-left: 40px;
-  padding-top: 17px;
-  
- }
- */
- /* high light*/
- .highlight{
-  position: absolute;
-  height: 50%;
-  width: 100%;
-  top: 15%;
-  left: 0;
-  pointer-events: none;
-  opacity: 0.5;
- }
- .form-control:focus ~ .highlight , .floating-select:focus ~ .highlight{
-  -webkit-animation:inputHighlighter 0.3s ease;
-  -moz-animation:inputHighlighter 0.3s ease;
-  animation:inputHighlighter 0.3s ease;
- }
- @-webkit-keyframes inputHighlighter{
-  from {background: #5264AE; }
-  to { width: 0; background: transparent; }
- }
- @-moz-keyframes inputHighlighter{
-  from { background: #5264AE; }
-  to { width: 0; background: transparent; }
- }
- @keyframes inputHighlighter{
-  from { background: #5264AE; }
-  to { width: 0; background: transparent; }
-
+ 
