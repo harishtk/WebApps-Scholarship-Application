@@ -1,5 +1,5 @@
 <?php
-  include('session.php');
+include('session.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,87 +14,72 @@
     <link rel="stylesheet" type="text/css" href="fa/css/font-awesome.min.css">
     <title>Welcome</title>
     <script type="text/javascript">
-
-      function goTo(url) {
-        window.location = url;
-      }
+    function goTo(url) {
+    window.location = url;
+    }
     
     $(document).ready(function() {
-      var username = <?= $_SESSION['login_stud']; ?>;
-      var application_id = null;
-      var req = null;
-
-      $('#loading').css('display', '');
-
-      req = $.ajax({
-        url: 'database/fetch_stud_info.php',
-        method: 'post',
-        data: {
-          'username': username
-        },
-        dataType: 'json'
-      });
-
-      function updateStudInfo(response) {
-        
-        if ( response['err'] ) {
-          alert(response['err']);
-        } else {
-          $("#reg_no").html(response['reg_no']);
-          $("#name").html(response['name']);
-          $("#dept").html(response['dept']);
-          $("#dob").html(response['dob']);
-          $("#course_dur").html(response['course_dur']);
-          $("#blood_grp").html(response['blood_grp']);
-
-          // alert(response['application_id']);
-          // alert(response['is_rejected'] == false ? "Not Available" : "Available");
-          // if ( response['application_available'] != "" ) 
-          //   alert(response['application_id']);
-          // else 
-          //   alert(response['application_id']);
-          //   
-          
-          if ( response['application_available'] ) {
-
-            $('#nav-apply').css("display", "none");
-
-            if ( response['is_rejected'] == 1 ) {
-              $('#applicaiton-rejected').css("display", "");
-              $('#nav').css("display", "none");
-              $('#msg-trigger').attr('data-appid', response['application_id']);
-            }
-
-          }
-
-          if ( response['password_changed'] == 0 ) {
-            goTo('change_password.php');
-          }
-        }
-        
-        $('#loading').css('display', 'none');
-
-      }
-
-      req.done(function(response, textStatus, jqXHr) {
-        
-        updateStudInfo(response);
-      });
-
-      req.error(function(response, error) {
-        alert("Error: " + error);
-      });
-
-      $('#modal-reject-msg').on('show.bs.modal', function (evt) {
-        var app_id = $(evt.relatedTarget).data('appid');
-
-        $(this).find('#modal-title').text("Application Id: " + app_id);
-      });
-
+    var username = <?= $_SESSION['login_stud']; ?>;
+    var application_id = null;
+    var req = null;
+    $('#loading').css('display', '');
+    req = $.ajax({
+    url: 'database/fetch_stud_info.php',
+    method: 'post',
+    data: {
+    'username': username
+    },
+    dataType: 'json'
+    });
+    function updateStudInfo(response) {
+    
+    if ( response['err'] ) {
+    alert(response['err']);
+    } else {
+    $("#reg_no").html(response['reg_no']);
+    $("#name").html(response['name']);
+    $("#dept").html(response['dept']);
+    $("#dob").html(response['dob']);
+    $("#course_dur").html(response['course_dur']);
+    $("#blood_grp").html(response['blood_grp']);
+    // alert(response['application_id']);
+    // alert(response['is_rejected'] == false ? "Not Available" : "Available");
+    // if ( response['application_available'] != "" )
+    //   alert(response['application_id']);
+    // else
+    //   alert(response['application_id']);
+    //
+    
+    if ( response['application_available'] ) {
+    $('#nav-apply').css("display", "none");
+    if ( response['is_rejected'] == 1 ) {
+    $('#applicaiton-rejected').css("display", "");
+    $('#nav').css("display", "none");
+    $('#msg-trigger').attr('data-appid', response['application_id']);
+    }
+    }
+    if ( response['password_changed'] == 0 ) {
+    goTo('change_password.php');
+    }
+    }
+    
+    $('#loading').css('display', 'none');
+    }
+    req.done(function(response, textStatus, jqXHr) {
+    
+    updateStudInfo(response);
+    });
+    req.error(function(response, error) {
+    alert("Error: " + error);
+    });
+    $('#modal-reject-msg').on('show.bs.modal', function (evt) {
+    var app_id = $(evt.relatedTarget).data('appid');
+    $(this).find('#modal-title').text("Application Id: " + app_id);
+    });
     });
     </script>
   </head>
-  <body style="font-family: verdana;" class="parallax">
+  <body style="font-family: Google Sans;" class="parallax">
     <div class="jumbotron header text-center">
       <h1>This is Header.</h1>
       <p>This is Sub-Header.</p>
@@ -147,146 +132,138 @@
         </div>
       </div>
     </div>-->
-     <div class="container max-width">
+    <div class="container max-width water-drop">
       <div class="load-wrap text-center" style="display: none;" id="loading">
-          <div class="load-3">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-          </div>  
-          <p>Loading</p>
-      </div>
-    <div class="container stud-profile">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="profile-img">
-            <img src="user.png"  alt=""/>
-          </div>
+        <div class="load-3">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
         </div>
-        <div class="col-md-6">
-          <div class="profile-head text-center">         
+        <p>Loading</p>
+      </div>
+      <div class="container stud-profile">
+        <div class="row p-2">
+          <!-- <div class="col-md-4">
+            <div class="profile-img">
+              <img src="user.png"  alt=""/>
+            </div>
+          </div> -->
+          <div class="col text-center p-4">
+            
             <h5 id="name">
-
             NAVINKUMAR.S
             </h5>
-            <h6 class="text-muted">
-            Web Developer and Designer
+            <h6 class="text-muted id="reg_no">
+            164129
             </h6>
-            
-            
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item">
+          </div>
+        </div>
+        <div class="row justify-content-center profile-head">
+          <div class="col" style="font-size: xx-large; font-weight: lighter;">
+            <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+              <li class="nav-item mx-5">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item mx-5">
                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Info</a>
               </li>
             </ul>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="profile-work text-center" >
-            <!--  <p><h5>
-              NAVINKUMAR.s
-              </h5>
-              <h6 class="text-muted">
-              Web Developer and Designer
-            </h6></p>
-          -->              </div>
-        </div>
-        <div class="col-md-5 ">
-          <div class="tab-content profile-tab" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Name:</label>
+        <div class="row">
+          <div class="col text-center ">
+            <div class="tab-content profile-tab" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row text-center p-3 m-3">
+                  <div class="col">
+                    <label>Name:</label>
+                  </div>
+                  <div class="col text-left">
+                    <p id="name">NAVINKUMAR.S</p>
+                  </div>
                 </div>
-                <div class="col-md-6">
-                  <p id="name">NAVINKUMAR.S</p>
+                <div class="row  p-3 m-2">
+                  <div class="col">
+                    <label><i class="fa fa-share-alt"></i>Branch:</label>
+                  </div>
+                  <div class="col text-left">
+                    <p id="dept">cse/reg</p>
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label><i class="fa fa-share-alt"></i>Branch:</label>
+                <div class="row  p-3 m-2">
+                  <div class="col-md-6">
+                    <label><i class="fa fa-calendar"></i>Year:</label>
+                  </div>
+                  <div class="col text-left">
+                    <p id="course_dur">2016-2019</p>
+                  </div>
                 </div>
-                <div class="col-md-6">
-                  <p id="dept">cse/reg</p>
+                <div class="row  p-3 m-2">
+                  <div class="col-md-6">
+                    <label><i class="fa fa-envelope"></i>Email:</label>
+                  </div>
+                  <div class="col text-left">
+                    <p id="email">******@gmail.com</p>
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label><i class="fa fa-calendar"></i>Year:</label>
-                </div>
-                <div class="col-md-6">
-                  <p id="course_dur">2016-2019</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label><i class="fa fa-envelope"></i>Email:</label>
-                </div>
-                <div class="col-md-6">
-                  <p id="email">******@gmail.com</p>
+                <div class="row  p-3 m-2">
+                  <div class="col-md-6">
+                    <label></label>
+                  </div>
+                  <div class="col-md-6">
+                    <p></p>
+                  </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label></label>
+              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="row  p-3 m-2">
+                  <div class="col-md-6">
+                    <label><i class="fa fa-calendar-o"></i>DOB:</label>
+                  </div>
+                  <div class="col text-left">
+                    <p id="dob">00/00/0000</p>
+                  </div>
                 </div>
-                <div class="col-md-6">
-                  <p></p>
+                
+                <div class="row p-3 m-2">
+                  <div class="col-md-6">
+                    <label><span class="glyphicon glyphicon-tint"></span>Blood Group: </label>
+                  </div>
+                  <div class="col text-left">
+                    <p id="blood_grp">2</p>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-              <div class="row">
-                <div class="col-md-6">
-                  <label><i class="fa fa-calendar-o"></i>DOB:</label>
-                </div>
-                <div class="col-md-6">
-                  <p id="dob">00/00/0000</p>
-                </div>
-              </div>
-              
-              <div class="row">
-                <div class="col-md-6">
-                  <label><span class="glyphicon glyphicon-tint"></span>Blood Group: </label>
-                </div>
-                <div class="col-md-6">
-                  <p id="blood_grp">2</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Reg No:</label>
-                </div>
-                <div class="col-md-6">
-                  <p id="reg_no">ENGLISH</p>
+                <div class="row  p-3 m-2">
+                  <div class="col-md-6">
+                    <label>Reg No:</label>
+                  </div>
+                  <div class="col text-left">
+                    <p id="reg_no">ENGLISH</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row justify-content-center text-center" id="nav"> 
-        <div class="col-sm-6" id="nav-apply">
-          <button class="btn-big water-drop" aria-describedby="#apply-desc" onclick="goTo('application_form.php')"><i class="fa fa-pencil"></i>Apply</button>
-          <small id="apply-desc">Apply for Scholarship</small>
+        <div class="row justify-content-center text-center" id="nav">
+          <div class="col-sm-6" id="nav-apply">
+            <button class="btn-big water-drop" aria-describedby="#apply-desc" onclick="goTo('application_form.php')"><i class="fa fa-pencil"></i>Apply</button>
+            <small id="apply-desc">Apply for Scholarship</small>
+          </div>
+          <div class="col-sm-6" id="nav-track">
+            <button class="btn-big water-drop" aria-describedby="#track-application"><i class="fa fa-search"></i>Track</button>
+            <small id="track-application">Application Status</small>
+          </div>
         </div>
-        <div class="col-sm-6" id="nav-track">
-          <button class="btn-big water-drop" aria-describedby="#track-application"><i class="fa fa-search"></i>Track</button>
-          <small id="track-application">Application Status</small>
+        <div class="row justify-content-center text-center" id="applicaiton-rejected" style="display: none;">
+          <div class="col-sm">
+            <button class="btn-big water-drop" aria-describedby="#reject-msg" disabled>Application Rejected!</button>
+            <small id="reject-msg"><a href="#" id="msg-trigger" data-toggle="modal" data-target="#modal-reject-msg" data-appid="example" class="text-danger bolder" style="text-decoration: none">Tell Me What Happened</a></small>
+          </div>
         </div>
-      </div>
-      <div class="row justify-content-center text-center" id="applicaiton-rejected" style="display: none;">
-      <div class="col-sm">
-        <button class="btn-big water-drop" aria-describedby="#reject-msg" disabled>Application Rejected!</button>
-        <small id="reject-msg"><a href="#" id="msg-trigger" data-toggle="modal" data-target="#modal-reject-msg" data-appid="example" class="text-danger bolder" style="text-decoration: none">Tell Me What Happened</a></small>
       </div>
     </div>
-    </div>
+    
     <div class="modal fade" id="modal-reject-msg" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -305,6 +282,11 @@
         </div>
       </div>
     </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-text">Viewing this page on: <?= date("l, j M y g:i A") ?> </h5>
+      </div>
+    </div>
     <div class="footer white">
       <div class="row">
         <div class="col-sm white">
@@ -317,7 +299,7 @@
           <p><a href="#">Privacy Policy</a></p>
         </div>
       </div>
-      <p class="text-center">Copyright &copy <script>document.write(new Date().getFullYear())</script> - EpicSoftwares.</p>
+      <p class="text-center">Copyright <i class="fa fa-copyright"></i> <script>document.write(new Date().getFullYear())</script> - EpicSoftwares.</p>
     </div>
   </body>
 </html>

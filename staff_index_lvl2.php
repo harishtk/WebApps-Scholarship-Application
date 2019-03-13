@@ -279,6 +279,7 @@
             </div>
             <div class="card-body text-center ">
               <p class="card-text">No applications available!</p>
+              <p class="text-secondary"><span><i class="fa fa-info-circle"></i></span>As soon as the application submitted, will appear here. Now take a cup of <i class="fa fa-coffee"></i></p>
             </div>
           </div>
         </div>

@@ -42,8 +42,17 @@
 			<div class="form-group-lg p-2 m-3">
 				<input type="file" name="address_proof" class="form-control-file" required>
 			</div>
+			<div class="form-group-lg p-2 m-3">
+				<input type="file" name="bank_passbook" class="form-control-file" required>
+			</div>
+			<div class="form-group-lg p-2 m-3">
+				<input type="file" name="community_certificate" class="form-control-file" required>
+			</div>
+			<div class="form-group-lg p-2 m-3">
+				<input type="file" name="marksheet" class="form-control-file" required>
+			</div>
 			<div class="form-group-lg p-2 m-3 text-center">
-				<button type="submit" class="btn btn-primary btn-lg">Upload Image</button>
+				<button type="submit" class="btn btn-primary btn-lg">Upload Documents</button>
 			</div>
 		</form>
 		<div class="display-4" id="err">

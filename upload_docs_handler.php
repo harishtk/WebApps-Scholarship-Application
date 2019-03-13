@@ -1,5 +1,6 @@
 <?php 
 
+	include('database/db_config.php');
 	session_start();
 
 	$return['msg'] = "File Upload Failed!";
@@ -39,18 +40,10 @@
 			// echo "File Upload Successful!<br>";
 			// echo "File Path: ".basename($target_file)."<br>";
 		}
+
+		$db = new Database();
+		$res = $db->update_uploads($_SESSION['login_stud'], $_SESSION['application_id'], $target_dir);
+		
 	}
-
-	// $url = "upload_docs.php";
-
-	// $ch = curl_init($url);
-
-	// curl_setopt($ch, CURLOPT_POST, 1);
-	// curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($return));
-	// curl_setopt($ch, CURLOPT_HTTPHEADER, array('contentType: application/json'));
-
-	// curl_exec($ch);
-	
-	// echo json_encode($return);
 
  ?>

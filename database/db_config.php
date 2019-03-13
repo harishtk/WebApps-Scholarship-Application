@@ -550,6 +550,52 @@
 			
 			return $return;
 		}
+
+		function add_new_application($application) {
+			
+			$q = "INSERT INTO application(application_id, stud_name, father_name, clg_address, la_yr_course, cu_yr_course, no_of_arrear, elig_for_scholar, elig_for_next_exam, dept, cast, class, temp_address, perm_address, prev_yr_scholar_amt, hostel_chk_in_la_yr, hostel_chk_out_la_yr, hostel_chk_in_cu_yr, hostel_chk_out_cu_yr, email) VALUES(?, ?,?,?  ,?,?,?,?   ,?,?,?,?   ,?,?,?,?,   ?,?,?,? ) ";
+			
+			if ( $stmt = $this->prepare($q) ) {
+				
+				$stmt->bind_param("ssssssiiisssssisssss", $application['application_id']
+					, $application['stud_name'], $application['father_name'], $application['clg_address'], $application['la_yr_course'], $application['cu_yr_course'], $application['no_of_arrear'], $application['elig_for_scholar'], $application['elig_for_next_exam'], $application['dept'], $application['caste'], $application['temp_address'], $application['perm_address'], $application['prev_yr_scholar_amt'], $application['hostel_chk_in_la_yr'], $application['hostel_chk_out_la_yr'], $application['hostel_chk_in_cu_yr'], $application['hostel_chk_out_cu_yr'], $application['email'] );
+					
+					$stmt->execute();
+					
+					$res = $stmt->get_result();
+					
+					if ( $res->affected_rows >= 1 )
+						return true;
+					
+					$stmt->free_result();
+					
+					$stmt->close();
+					
+			} 
+			
+			return false;
+		}
+		
+		public function update_uploads($reg_no, $application_id, $upload_dir) {
+			
+			if ($stmt = $this->db_con->prepare("INSERT INTO uploads_map(reg_no, application_id, upload_dir) VALUES(?, ?, ?)")) {
+				
+				$stmt->bind_param("sss", $reg_no, $application_id, $upload_dir);
+				
+				$stmt->execute();
+				
+				$res = $stmt->get_result();
+				
+				if ( $res->affected_rows >= 1)
+					return true;
+					
+				$stmt->free_result();
+				
+				$stmt->close();
+			}
+			
+			return false;
+		}
 		
 	    /**
 	     * Destroys the connection object as soon as there is no reference.

@@ -95,7 +95,7 @@
 					alert(response['msg']);
 					// for ( var key in response )
 					// 	alert(response[key]);
-					gotoURL('staff_index_lvl1.php');
+
 				});
 
 				req.error(function (error, msg) {
@@ -162,7 +162,7 @@
 
 
 
-				req =  $.ajax({
+				req = $.ajax({
 					url: "database/validate_application.php",
 					type: "POST",
 					data: {
@@ -180,7 +180,7 @@
 					alert(response);
 					// for ( var key in response )
 					// 	alert(response[key]);
-					gotoURL('staff_index_lvl1.php');
+				
 				});
 
 				req.error(function (error, msg) {
@@ -191,10 +191,6 @@
 			acceptApplication_js = acceptApplication;
 			rejectApplication_js = rejectApplication;
 		});
-
-		function gotoURL(url) {
-			window.location(url);
-		}
 
 		// function updateConductCert_js() {
 		// 	alert("Data Updated!");
@@ -230,206 +226,147 @@
 				</ul>
 			</div>
 		</nav>
-		<div class="container water-drop">
-			<div class="display-4 text-center">Application <?= $application_id ?></div>
+		<div class="row">
+			<div class="col-lg-2 col-sm-2 col-md-2"></div>
+			<div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+				<div class="jumbotron m-5 bg-light border border-primary rounded-15">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<h4 class="text-center mb-5">Application <?= $application_id ?></h4>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Student Name:</td>
+									<td id="stud_name"></td>
+								</tr>
+								<tr>
+									<td>Father Name:</td>
+									<td id="father_name"></td>
+								</tr>
+								<tr>
+									<td>College Address:</td>
+									<td id="clg_address"></td>
+								</tr>
+								<tr>
+									<td>Last Year Course:</td>
+									<td id="la_yr_course"></td>
+								</tr>
+								<tr>
+									<td>Current Year Course:</td>
+									<td id="cu_yr_course"></td>
+								</tr>
+								<tr>
+									<td>Number of Arrear:</td>
+									<td id="no_of_arrear"></td>
+								</tr>
+								<tr>
+									<td>Eligible for Applying Scholarship:</td>
+									<td id="elig-for-scholarship"></td>
+								</tr>
+								<tr>
+									<td>Eligible for Next Exam:</td>
+									<td id="elig-for-next-exam"></td>
+								</tr>
+								<tr>
+									<td>Department:</td>
+									<td id="dept"></td>
+								</tr>
+								<tr>
+									<td>Caste:</td>
+									<td id="caste"></td>
+								</tr>
+								<tr>
+									<td>Class:</td>
+									<td id="class"></td>
+								</tr>
+								<tr>
+									<td>Temporary Address:</td>
+									<td id="temp-addr"></td>
+								</tr>
+								<tr>
+									<td>Permanent Address:</td>
+									<td id="perm-addr"></td>
+								</tr>
+								<tr>
+									<td>Previous Year Scholarship Amount:</td>
+									<td id="prev-year-scholar-amt"></td>
+								</tr>
+								<tr>
+									<td>Hostel Check In Last Year:</td>
+									<td id="hostel-chk-in-la-year"></td>
+								</tr>
+								<tr>
+									<td>Hostel Check Out Last Year:</td>
+									<td id="hostel-chk-out-la-year"></td>
+								</tr>
+								<tr>
+									<td>Hostel Check In Current Year:</td>
+									<td id="hostel-chk-in-cu-year"></td>
+								</tr>
+								<tr>
+									<td>Hostel Check Out Current Year (Approx):</td>
+									<td id="hostel-chk-out-cu-year"></td>
+								</tr>
+							</tbody>
+						</table>
+						<form method="POST" action="database/update_conduct_cert.php" id="conduct-cert">
+							<div class="row">
+								<div class="col-md-5 form-group">
+									<p>Candidate's Behaviour Impression:</p>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group">
+										<input type="text" name="cand-behav-impr" class="form-control form-control-main" required placeholder="Eg. Good" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5 form-group">
+									<p>Candidate's Previous Year Attendance:</p>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group">
+										<input type="text" name="cand-prev-yr-attend" class="form-control form-control-main" required placeholder="Eg. 92%" />
+									</div>
+								</div>
+							</div>
+							<input type="hidden" name="application_id" value="<?= $_GET['app_id'] ?>">
+							<div class="row">
+								<div class="col-md-4">
+								</div>
+								<div class="col-md-4">
+								</div>
+								<div class="col-md-4">
+									<button type="submit" onclick="updateConductCert_js()" class="btn btn-primary" id="btn-update" aria-describedby="#info-text"><i class="fa fa-upload"></i>Update Details</button><br>
+									<small class="text-muted p-3 m-2"><span id="info-text"></span></small>
+								</div>
+							</div>
+						</form>
+							<div class="row">
+								<div class="col-md-5 form-group" id="btn-accept">
+									<button class="btn-norm water-drop" onclick="acceptApplication_js()">Accept</button>
+									<!-- btn btn-lg btn-outline-success -->
+								</div>
+								<div class="col-md-5 form-group">
+									<button type="button" class="btn-norm water-drop" data-toggle="modal" data-target="#reject-modal">Reject</button>
+									<!-- btn btn-lg btn-outline-danger -->
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-2 col-sm-2 col-md-2"></div>
 		</div>
-		<div class="application-container container">
-			<div class="row">
-				<div class="col-md-5">
-					Student Name:
 				</div>
-				<div class="col-md-5">
-					<p id="stud_name"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Father Name:
-				</div>
-				<div class="col-md-5">
-					<p id="father_name"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					College Address:
-				</div>
-				<div class="col-md-5">
-					<p id="clg_address"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Last Year Course:
-				</div>
-				<div class="col-md-5">
-					<p id="la_yr_course"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Current Year Course:
-				</div>
-				<div class="col-md-5">
-					<p id="cu_yr_course"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Number of Arrear:
-				</div>
-				<div class="col-md-5">
-					<p id="no_of_arrear"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Eligible for Applying Scholarship:
-				</div>
-				<div class="col-md-5">
-					<p id="elig-for-scholarship"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Eligible for Next Exam:
-				</div>
-				<div class="col-md-5">
-					<p id="elig-for-next-exam"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Department:
-				</div>
-				<div class="col-md-5">
-					<p id="dept"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Caste:
-				</div>
-				<div class="col-md-5">
-					<p id="caste"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Class:
-				</div>
-				<div class="col-md-5">
-					<p id="class"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Temporary Address:
-				</div>
-				<div class="col-md-5">
-					<p id="temp-addr"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Permanent Address:
-				</div>
-				<div class="col-md-5">
-					<p id="perm-addr"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Previous Year Scholarship Amount:
-				</div>
-				<div class="col-md-5">
-					<p id="prev-year-scholar-amt"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Hostel Check In Last Year:
-				</div>
-				<div class="col-md-5">
-					<p id="hostel-chk-in-la-year"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Hostel Check Out Last Year:
-				</div>
-				<div class="col-md-5">
-					<p id="hostel-chk-out-la-year"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Hostel Check In Current Year:
-				</div>
-				<div class="col-md-5">
-					<p id="hostel-chk-in-cu-year"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					Hostel Check Out Current Year (Approx):
-				</div>
-				<div class="col-md-5">
-					<p id="hostel-chk-out-cu-year"></p>
-				</div>
-			</div>
-			<form method="POST" action="database/update_conduct_cert.php" id="conduct-cert">
-				<div class="row">
-					<div class="col-md-5 form-group">
-						<p>Candidate's Behaviour Impression:</p>
-					</div>
-					<div class="col-md-5">
-						<div class="form-group">
-							<input type="text" name="cand-behav-impr" class="form-control form-control-main" required placeholder="Eg. Good" />
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-5 form-group">
-						<p>Candidate's Previous Year Attendance:</p>
-					</div>
-					<div class="col-md-5">
-						<div class="form-group">
-							<input type="text" name="cand-prev-yr-attend" class="form-control form-control-main" required placeholder="Eg. 92%" />
-						</div>
-					</div>
-				</div>
-				<input type="hidden" name="application_id" value="<?= $_GET['app_id'] ?>">
-				<div class="row">
-					<div class="col-md-4">
-					</div>
-					<div class="col-md-4">
-					</div>
-					<div class="col-md-4">
-						<button type="submit" onclick="updateConductCert_js()" class="btn btn-primary" id="btn-update" aria-describedby="#info-text"><i class="fa fa-upload"></i>Update Details</button>
-						<small class="text-muted p-3"><span id="info-text"></span></small>
-					</div>
-				</div>
-			</form>
-			<div class="row">
-				<div class="col-md-5 form-group" id="btn-accept">
-					<button class="btn-norm water-drop" onclick="acceptApplication_js()">Accept</button>
-					<!-- btn btn-lg btn-outline-success -->
-				</div>
-				<div class="col-md-5 form-group">
-					<button type="button" class="btn-norm water-drop" data-toggle="modal" data-target="#reject-modal">Reject</button>
-					<!-- btn btn-lg btn-outline-danger -->
-				</div>
-			</div>
-		</div>
-		<div class="modal fade" id="reject-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					 <div class="modal-header">
-					 	<h5 class="modal-title" id="exampleModalLabel">New Message</h5>
-					 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-					 </div>
-					 <div class="modal-body">
+					<div class="modal fade" id="reject-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+					 			<div class="modal-header">
+					 				<h5 class="modal-title" id="exampleModalLabel">New Message</h5>
+					 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+					 			</div>
+					 			<div class="modal-body">
 					 	<form id="form-reject-modal">
 					 		<div class="form-group">
 					 			<label for="appilcation-id" class="col-form-label"><i class="fa fa-file-text-o"></i>Application Id:</label>
